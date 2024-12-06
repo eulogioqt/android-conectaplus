@@ -6,11 +6,12 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,21 +23,24 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "WebSocket";
     private WebSocket webSocket;
+    private MessageAdapter messageAdapter;
+    private List<String> messageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         EditText messageEditText = findViewById(R.id.messageEditText);
         Button sendButton = findViewById(R.id.sendButton);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        messageList = new ArrayList<>();
+        messageAdapter = new MessageAdapter(messageList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(messageAdapter);
 
         startWebSocket();
 
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             String message = messageEditText.getText().toString();
             if (!message.isEmpty()) {
                 sendMessage(message);
+                messageEditText.setText("");
+                addMessage("Usuario: " + message);
             } else {
                 Toast.makeText(MainActivity.this, "Por favor, ingresa un mensaje", Toast.LENGTH_SHORT).show();
             }
@@ -62,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMessage(WebSocket webSocket, String text) {
                 Log.d(TAG, "Mensaje recibido: " + text);
-                runOnUiThread(() -> {
-                    Toast.makeText(MainActivity.this, "Mensaje invertido: " + text, Toast.LENGTH_SHORT).show();
-                });
+                runOnUiThread(() -> addMessage("Servidor: " + text));
             }
 
             @Override
@@ -85,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Enviando mensaje: " + message);
             webSocket.send(message);
         }
+    }
+
+    private void addMessage(String message) {
+        messageList.add(message);
+        messageAdapter.notifyItemInserted(messageList.size() - 1);
     }
 
     @Override
