@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startWebSocket() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("ws://192.168.1.153:8765").build();
+        Request request = new Request.Builder().url("ws://eulogioqt-raspberry.jumpingcrab.com:8765").build();
         WebSocketListener listener = new WebSocketListener() {
             @Override
             public void onOpen(WebSocket webSocket, Response response) {
