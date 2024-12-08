@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             if (!message.isEmpty()) {
                 sendMessage(message);
                 messageEditText.setText("");
-                addMessage("Usuario: " + message);
+                addMessage("[Tú] " + message);
             } else {
                 Toast.makeText(MainActivity.this, "Por favor, ingresa un mensaje", Toast.LENGTH_SHORT).show();
             }
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMessage(WebSocket webSocket, String text) {
                 Log.d(TAG, "Mensaje recibido: " + text);
-                runOnUiThread(() -> addMessage("Servidor: " + text));
+                runOnUiThread(() -> addMessage(text));
             }
 
             @Override
