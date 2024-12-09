@@ -19,7 +19,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private static final String TAG = "WebSocket";
     private WebSocket webSocket;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 messageEditText.setText("");
                 addMessage("[Tú] " + message);
             } else {
-                Toast.makeText(MainActivity.this, "Por favor, ingresa un mensaje", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "Por favor, ingresa un mensaje", Toast.LENGTH_SHORT).show();
             }
         });
     }
