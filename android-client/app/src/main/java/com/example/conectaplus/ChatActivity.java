@@ -122,7 +122,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onMessage(WebSocket webSocket, String text) {
                 Log.d(TAG, "Mensaje recibido: " + text);
-                runOnUiThread(() -> addMessage(text));
+                String message = text.substring("CHAT".length() + 1);
+                runOnUiThread(() -> addMessage(message));
             }
 
             @Override
@@ -177,7 +178,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage(String message) {
         if (webSocket != null) {
             Log.d(TAG, "Enviando mensaje: " + message);
-            webSocket.send(message);
+            webSocket.send("CHAT " + message);
         }
     }
 
