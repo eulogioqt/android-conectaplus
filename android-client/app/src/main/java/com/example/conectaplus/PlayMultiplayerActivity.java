@@ -20,7 +20,7 @@ import com.example.conectaplus.jugadores.Evaluador;
 import com.example.conectaplus.jugadores.Jugador;
 import com.example.conectaplus.jugadores.JugadorAlfaBeta;
 
-public class PlayAIActivity extends AppCompatActivity {
+public class PlayMultiplayerActivity extends AppCompatActivity {
 
     private static final int ROWS = 5;
     private static final int COLS = 6;

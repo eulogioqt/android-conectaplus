@@ -20,6 +20,9 @@
             android:name=".PlayAIActivity"
             android:exported="false" />
         <activity
+            android:name=".PlayMultiplayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChatActivity"
             android:exported="false" />
         <activity

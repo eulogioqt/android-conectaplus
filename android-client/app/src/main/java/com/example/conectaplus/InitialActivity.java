@@ -9,36 +9,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class InitialActivity extends AppCompatActivity {
 
-    private Button chatButton; // referencia al botón
-
-    private Button iaPlayButtom;
+    private Button chatButton;
+    private Button iaPlayButton;
+    private Button multiplayerPlayButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
 
-        // Obtén la referencia al botón
         chatButton = findViewById(R.id.btn_chat);
+        iaPlayButton = findViewById(R.id.btn_play_ai);
+        multiplayerPlayButton = findViewById(R.id.btn_play_multiplayer);
 
-        iaPlayButtom = findViewById(R.id.btn_play_ai);
-
-        // Asigna un listener al botón para detectar el clic
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Crea un Intent para ir a la actividad de chat
-                Intent intent = new Intent(InitialActivity.this, ChatActivity.class);
-                startActivity(intent);
-            }
+        chatButton.setOnClickListener(view -> {
+            Intent intent = new Intent(InitialActivity.this, ChatActivity.class);
+            startActivity(intent);
         });
-        iaPlayButtom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Crea un Intent para ir a la actividad de chat
-                Intent intent = new Intent(InitialActivity.this, PlayAIActivity.class);
-                startActivity(intent);
-            }
+
+        iaPlayButton.setOnClickListener(view -> {
+            Intent intent = new Intent(InitialActivity.this, PlayAIActivity.class);
+            startActivity(intent);
+        });
+
+        multiplayerPlayButton.setOnClickListener(view -> {
+            Intent intent = new Intent(InitialActivity.this, PlayMultiplayerActivity.class);
+            startActivity(intent);
         });
     }
 }
