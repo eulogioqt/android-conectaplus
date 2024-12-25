@@ -1,6 +1,6 @@
 package com.example.conectaplus.jugadores;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
 /**
  * Esquema para la clase de evaluadores entrenables mediante aprendizaje con refuerzo. Ejemplos son

@@ -1,7 +1,7 @@
 package com.example.conectaplus.conectak;
 
 import java.io.*;
-import jugadores.Jugador;
+import com.example.conectaplus.jugadores.Jugador;
 
 /**
  * 

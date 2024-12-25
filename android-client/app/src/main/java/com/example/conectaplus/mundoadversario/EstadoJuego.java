@@ -1,6 +1,6 @@
 package com.example.conectaplus.mundoadversario;
 
-import mundosolitario.RepresentacionEstado;
+import com.example.conectaplus.mundosolitario.RepresentacionEstado;
 
 /**
  * Representación de los estados de un juego bipersonal de suma cero.

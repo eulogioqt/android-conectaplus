@@ -1,6 +1,6 @@
 package com.example.conectaplus.jugadores;
 
-import mundoadversario.EstadoJuegoAprox;
+import com.example.conectaplus.mundoadversario.EstadoJuegoAprox;
 
 
 /**

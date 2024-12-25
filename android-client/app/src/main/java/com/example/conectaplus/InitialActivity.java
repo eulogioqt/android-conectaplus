@@ -11,6 +11,8 @@ public class InitialActivity extends AppCompatActivity {
 
     private Button chatButton; // referencia al botón
 
+    private Button iaPlayButtom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,12 +21,22 @@ public class InitialActivity extends AppCompatActivity {
         // Obtén la referencia al botón
         chatButton = findViewById(R.id.btn_chat);
 
+        iaPlayButtom = findViewById(R.id.btn_play_ai);
+
         // Asigna un listener al botón para detectar el clic
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Crea un Intent para ir a la actividad de chat
                 Intent intent = new Intent(InitialActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+        iaPlayButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crea un Intent para ir a la actividad de chat
+                Intent intent = new Intent(InitialActivity.this, PlayAIActivity.class);
                 startActivity(intent);
             }
         });

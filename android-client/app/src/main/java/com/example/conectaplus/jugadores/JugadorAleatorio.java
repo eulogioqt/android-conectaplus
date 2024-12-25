@@ -3,7 +3,7 @@ package com.example.conectaplus.jugadores;
 import java.util.List;
 import java.util.Random;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
 /**
  * Jugador aleatorio.

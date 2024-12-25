@@ -2,7 +2,7 @@ package com.example.conectaplus.jugadores;
 
 import java.util.List;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
 
 /**

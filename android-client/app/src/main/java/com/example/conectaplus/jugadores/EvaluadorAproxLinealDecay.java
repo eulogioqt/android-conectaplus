@@ -1,7 +1,7 @@
 package com.example.conectaplus.jugadores;
 
-import jugadores.EvaluadorAproxLineal;
-import mundoadversario.EstadoJuegoAprox;
+import com.example.conectaplus.jugadores.EvaluadorAproxLineal;
+import com.example.conectaplus.mundoadversario.EstadoJuegoAprox;
 
 /**
  * Evaluador para aproximación lineal que incluye un decaimiento del valor de alfa (tasa de aprendizaje).

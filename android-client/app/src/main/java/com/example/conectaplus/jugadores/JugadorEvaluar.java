@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
 /**
  * Jugador que elige el siguiente movimiento evaluando los sucesores

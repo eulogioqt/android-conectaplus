@@ -3,8 +3,8 @@ package com.example.conectaplus.jugadores;
 
 import java.util.Map;
 
-import mundoadversario.EstadoJuego;
-import mundosolitario.OverrideHashCode;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundosolitario.OverrideHashCode;
 
 import java.util.Hashtable;
 

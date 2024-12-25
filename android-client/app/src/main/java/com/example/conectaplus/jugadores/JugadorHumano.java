@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
 /**
  * @author Lorenzo Mandow

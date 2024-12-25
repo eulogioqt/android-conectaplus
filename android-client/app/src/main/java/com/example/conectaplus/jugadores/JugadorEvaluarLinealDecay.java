@@ -1,8 +1,8 @@
 package com.example.conectaplus.jugadores;
 
-import jugadores.JugadorEntrenable;
-import jugadores.JugadorEvaluarLineal;
-import mundoadversario.EstadoJuegoAprox;
+import com.example.conectaplus.jugadores.JugadorEntrenable;
+import com.example.conectaplus.jugadores.JugadorEvaluarLineal;
+import com.example.conectaplus.mundoadversario.EstadoJuegoAprox;
 
 /**
 * Jugador que evalúa los sucesores inmediatos usando una función de evaluación lineal

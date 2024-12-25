@@ -1,6 +1,6 @@
 package com.example.conectaplus.jugadores;
 
-import mundoadversario.EstadoJuego;
+import com.example.conectaplus.mundoadversario.EstadoJuego;
 
     /**
      * Guarda una valoración double asociada a un objeto EstadoJuego.

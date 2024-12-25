@@ -1,6 +1,6 @@
 package com.example.conectaplus.conectak;
 
-import jugadores.Evaluador;
+import com.example.conectaplus.jugadores.Evaluador;
 
 /**
  * Clase EvaluadorCK que implementa un evaluador heurístico para el problema del Conecta-K.

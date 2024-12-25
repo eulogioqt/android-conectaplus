@@ -1,6 +1,6 @@
 package com.example.conectaplus.mundoadversario;
 
-import jugadores.Jugador;
+import com.example.conectaplus.jugadores.Jugador;
 
 /**
  * @author Lorenzo Mandow
@@ -71,29 +71,5 @@ public class Juego<E extends EstadoJuego<E>, J1 extends Jugador<E>, J2 extends J
         } else { //agotado
             return 0;
         }
-    }
-
-    public int[] torneo(int numPartidas, boolean eco) {
-        int victoriasJug1 = 0;
-        int victoriasJug2 = 0;
-        int empates = 0;
-        for(int i = 0; i < numPartidas; i++) {
-            int resultado = jugarPartida(false);
-            if(resultado == 1) {
-                victoriasJug1++;
-            } else if(resultado == -1) {
-                victoriasJug2++;
-            } else {
-                empates++;
-            }
-        }
-        if(eco) {
-            System.out.println("Jugador 1: " + victoriasJug1 + " victorias");
-            System.out.println("Jugador 2: " + victoriasJug2 + " victorias");
-            System.out.println("Empates: " + empates);
-        }
-
-
-        return new int[]{victoriasJug1, empates, victoriasJug2};
     }
 }

@@ -1,7 +1,7 @@
 package com.example.conectaplus.jugadores;
 
 
-import mundoadversario.EstadoJuegoAprox;
+import com.example.conectaplus.mundoadversario.EstadoJuegoAprox;
 
 /**
  * Para aprendizaje con refuerzo utilizando un aproximador lineal de la función de
