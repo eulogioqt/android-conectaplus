@@ -1,11 +1,14 @@
 package com.example.conectaplus;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,26 +19,31 @@ import com.example.conectaplus.conectak.EvaluadorCK;
 import com.example.conectaplus.conectak.Movimiento;
 import com.example.conectaplus.jugadores.Evaluador;
 import com.example.conectaplus.jugadores.Jugador;
-import com.example.conectaplus.jugadores.JugadorAleatorio;
 import com.example.conectaplus.jugadores.JugadorAlfaBeta;
 
 public class PlayAIActivity extends AppCompatActivity {
 
+    private static final int ROWS = 5;
+    private static final int COLS = 6;
+    private static final int WIN = 4;
+    private static final int PROFUNDIDAD = 8;
+    private static int CELL_SIZE = 0;
+
     private ConectaK conectaK;
-    private static final int ROWS = 3;
-    private static final int COLS = 3;
     private GridLayout boardLayout;
     private LinearLayout buttonLayout;
     private boolean isHumanTurn = false;
-
-    private int profundidad = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_ai);
 
-        conectaK = new ConectaK(ROWS, COLS, 3);
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        CELL_SIZE = Math.min((int)(0.95 * screenWidth / COLS), (int)(0.95 * (screenHeight * 0.7) / ROWS));
+
+        conectaK = new ConectaK(ROWS, COLS, WIN);
 
         boardLayout = findViewById(R.id.boardLayout);
         buttonLayout = findViewById(R.id.buttonLayout);
@@ -43,11 +51,8 @@ public class PlayAIActivity extends AppCompatActivity {
         initializeBoard();
         initializeColumnButtons();
 
-        //Jugador<ConectaK> jugadorIA = new JugadorAleatorio<>();
-
         Evaluador<ConectaK> evaluador = new EvaluadorCK();
-
-        Jugador<ConectaK> jugadorIA = new JugadorAlfaBeta<>(evaluador, profundidad);
+        Jugador<ConectaK> jugadorIA = new JugadorAlfaBeta<>(evaluador, PROFUNDIDAD);
 
         new Thread(() -> {
             int resultado = jugarPartida(jugadorIA);
@@ -58,20 +63,21 @@ public class PlayAIActivity extends AppCompatActivity {
     private void initializeBoard() {
         boardLayout.setRowCount(ROWS);
         boardLayout.setColumnCount(COLS);
-
+        
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                TextView cell = new TextView(this);
-                cell.setText("");
-                cell.setBackgroundResource(R.drawable.cell_border);
+                FrameLayout cellContainer = new FrameLayout(this);
+                cellContainer.setBackgroundResource(R.drawable.cell_border);
+
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                 params.rowSpec = GridLayout.spec(i);
                 params.columnSpec = GridLayout.spec(j);
-                params.width = 200;
-                params.height = 200;
+                params.width = CELL_SIZE;
+                params.height = CELL_SIZE;
                 params.setMargins(2, 2, 2, 2);
-                cell.setLayoutParams(params);
-                boardLayout.addView(cell);
+
+                cellContainer.setLayoutParams(params);
+                boardLayout.addView(cellContainer);
             }
         }
     }
@@ -79,7 +85,8 @@ public class PlayAIActivity extends AppCompatActivity {
     private void initializeColumnButtons() {
         for (int col = 0; col < COLS; col++) {
             Button button = new Button(this);
-            button.setText("Col " + (col + 1));
+            button.setText(String.valueOf(col + 1));
+
             final int column = col;
             button.setOnClickListener(v -> {
                 if (isHumanTurn) {
@@ -89,23 +96,39 @@ public class PlayAIActivity extends AppCompatActivity {
                 }
             });
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(10, 10, 10, 10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CELL_SIZE, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(2, 2, 2, 2); // Márgenes entre los botones
             button.setLayoutParams(params);
+
             buttonLayout.addView(button);
         }
     }
 
-    public void paintCell(int x, int y, String value) {
-        int index = x * COLS + y;
-        TextView cell = (TextView) boardLayout.getChildAt(index);
-        cell.setText(value);
+    private void paintCell(int row, int col, boolean isHuman) {
+        runOnUiThread(() -> {
+            int index = row * COLS + col;
+            FrameLayout cellContainer = (FrameLayout) boardLayout.getChildAt(index);
+
+            View ficha = new View(this);
+            GradientDrawable circle = new GradientDrawable();
+            circle.setShape(GradientDrawable.OVAL);
+            circle.setColor(isHuman ? Color.RED : Color.YELLOW);
+            circle.setStroke(4, Color.BLACK);
+
+            ficha.setBackground(circle);
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+            );
+            params.setMargins(10, 10, 10, 10);
+            ficha.setLayoutParams(params);
+
+            cellContainer.addView(ficha);
+        });
     }
 
-    public void dropFicha(int colNum) {
+    private void dropFicha(int colNum) {
         int row = conectaK.siguienteFila(colNum);
         if (row == -1) {
             showMessage("Columna llena");
@@ -113,36 +136,38 @@ public class PlayAIActivity extends AppCompatActivity {
         }
 
         conectaK = conectaK.mueveHumano(colNum);
-        paintCell(row, colNum, "X");
+        paintCell(row, colNum, true);
 
-        if (isGameOver(conectaK)) {
-            showGameOverDialog(getGameResult(conectaK));
+        if (isGameOver()) {
+            showGameOverDialog(getGameResult());
         } else {
             isHumanTurn = false;
         }
     }
 
-    private void handleAITurn(Jugador<ConectaK> jugadorIA, ConectaK e) {
-        conectaK = jugadorIA.mueve(e);
-
+    private void handleAITurn(Jugador<ConectaK> jugadorIA) {
+        conectaK = jugadorIA.mueve(conectaK);
         Movimiento lastMove = conectaK.getUltimoMov();
+
         if (lastMove != null) {
-            paintCell(lastMove.f(), lastMove.c(), "O");
+            paintCell(lastMove.f(), lastMove.c(), false);
         }
 
-        if (isGameOver(conectaK)) {
-            showGameOverDialog(getGameResult(conectaK));
-        } else {
-            isHumanTurn = true;
-        }
+        runOnUiThread(() -> {
+            if (isGameOver()) {
+                showGameOverDialog(getGameResult());
+            } else {
+                isHumanTurn = true;
+            }
+        });
     }
 
-    private boolean isGameOver(ConectaK e) {
-        return e.ganaActual() || e.ganaOtro() || e.agotado();
+    private boolean isGameOver() {
+        return conectaK.ganaActual() || conectaK.ganaOtro() || conectaK.agotado();
     }
 
     private int jugarPartida(Jugador<ConectaK> jugadorIA) {
-        while (!isGameOver(conectaK)) {
+        while (!isGameOver()) {
             if (conectaK.turno1()) {
                 isHumanTurn = true;
                 while (isHumanTurn) {
@@ -152,17 +177,17 @@ public class PlayAIActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                handleAITurn(jugadorIA, conectaK);
+                handleAITurn(jugadorIA);
             }
         }
-        return getGameResult(conectaK);
+        return getGameResult();
     }
 
-    private int getGameResult(ConectaK e) {
-        if (e.ganaActual()) {
-            return e.turno1() ? 1 : -1;
-        } else if (e.ganaOtro()) {
-            return e.turno1() ? -1 : 1;
+    private int getGameResult() {
+        if (conectaK.ganaActual()) {
+            return conectaK.turno1() ? 1 : -1;
+        } else if (conectaK.ganaOtro()) {
+            return conectaK.turno1() ? -1 : 1;
         } else {
             return 0;
         }
@@ -170,24 +195,15 @@ public class PlayAIActivity extends AppCompatActivity {
 
     private void showGameOverDialog(int result) {
         runOnUiThread(() -> {
-            String message;
-            if (result == 1) {
-                message = "Enhorabuena, has ganado!";
-            } else if (result == -1) {
-                message = "Lo siento, has perdido.";
-            } else {
-                message = "Es un empate.";
-            }
-
+            String message = result == 1 ? "Enhorabuena, has ganado!" : result == -1 ? "Lo siento, has perdido." : "Es un empate.";
             new AlertDialog.Builder(this)
                     .setTitle("Juego Terminado")
                     .setMessage(message)
-                    .setCancelable(false) // Evita que el diálogo se cierre accidentalmente
+                    .setCancelable(false)
                     .setPositiveButton("Aceptar", (dialog, which) -> finish())
                     .show();
         });
     }
-
 
     private void showMessage(String message) {
         runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
