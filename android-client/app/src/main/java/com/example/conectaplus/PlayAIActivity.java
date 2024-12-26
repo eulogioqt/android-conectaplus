@@ -1,5 +1,6 @@
 package com.example.conectaplus;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -137,9 +138,7 @@ public class PlayAIActivity extends AppCompatActivity {
         conectaK = conectaK.mueveHumano(colNum);
         paintCell(row, colNum, true);
 
-        if (isGameOver()) {
-            showGameOverDialog(getGameResult());
-        } else {
+        if (!isGameOver()) {
             isHumanTurn = false;
         }
     }
@@ -152,13 +151,9 @@ public class PlayAIActivity extends AppCompatActivity {
             paintCell(lastMove.f(), lastMove.c(), false);
         }
 
-        runOnUiThread(() -> {
-            if (isGameOver()) {
-                showGameOverDialog(getGameResult());
-            } else {
-                isHumanTurn = true;
-            }
-        });
+        if (!isGameOver()) {
+            isHumanTurn = true;
+        }
     }
 
     private boolean isGameOver() {
@@ -194,17 +189,31 @@ public class PlayAIActivity extends AppCompatActivity {
 
     private void showGameOverDialog(int result) {
         runOnUiThread(() -> {
-            String message = result == 1 ? "Enhorabuena, has ganado!" : result == -1 ? "Lo siento, has perdido." : "Es un empate.";
+            String message = result == 1 ? "Enhorabuena, has ganado!" :
+                    result == -1 ? "Lo siento, has perdido." :
+                            "Es un empate.";
             new AlertDialog.Builder(this)
                     .setTitle("Juego Terminado")
                     .setMessage(message)
                     .setCancelable(false)
-                    .setPositiveButton("Aceptar", (dialog, which) -> finish())
+                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                        Intent intent = new Intent(this, InitialActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    })
                     .show();
         });
     }
 
+    private Toast currentToast;
     private void showMessage(String message) {
-        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> {
+            if (currentToast != null) {
+                currentToast.cancel(); // Cancela el Toast actual si está mostrándose.
+            }
+            currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+            currentToast.show();
+        });
     }
 }

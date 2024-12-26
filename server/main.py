@@ -25,15 +25,15 @@ async def process_message(websocket, m):
     print(f"[{client_address}] {m}")
 
     if is_message_type(m, MESSAGES.CHAT):
-        message = m[(len(MESSAGES.CHAT) + 1):]
+        msg = m[(len(MESSAGES.CHAT) + 1):]
 
-        if len(connected_clients.keys()) == 1:
-            await send_message(websocket, MESSAGES.CHAT, str(f"[Server] {message[::-1]}"))
-        else:
-            for other_client_address in connected_clients.keys():
-                if other_client_address != client_address:
-                    other_client = connected_clients.get(other_client_address)
-                    await send_message(other_client, MESSAGES.CHAT, str(f"[{client_address}] {message}"))
+        match_code = get_match_code(client_address)
+        if match_code is not None:
+            other_player = get_other_player(client_address, match_code)
+            other_client = connected_clients.get(other_player)
+            
+            print(f"[{client_address}] Manda el mensaje {msg} en la sala {match_code}")
+            await send_message(other_client, MESSAGES.CHAT, msg)
     
     elif is_message_type(m, MESSAGES.CREATE):
         code = None
@@ -78,6 +78,8 @@ async def process_message(websocket, m):
 
     else:
         await send_message(websocket, MESSAGES.CHAT, "[Server] ES EL FIN DEL MUNDO NO HAS MANDADO UN CHAT")
+    
+    print(matches)
 
 def get_match_code(client_address):
     for match_code, actual_match in matches.items():

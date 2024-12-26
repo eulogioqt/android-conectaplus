@@ -1,5 +1,6 @@
 package com.example.conectaplus;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,18 +27,18 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
     private static final int ROWS = 5;
     private static final int COLS = 6;
     private static final int WIN = 4;
-    private static final int PROFUNDIDAD = 8;
     private static int CELL_SIZE = 0;
 
     private ConectaK conectaK;
     private GridLayout boardLayout;
     private LinearLayout buttonLayout;
-    private boolean isHumanTurn = false;
+    private TextView textRoom;
+    private int turnoLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_ai);
+        setContentView(R.layout.activity_play_multiplayer);
 
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -46,17 +48,39 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
         boardLayout = findViewById(R.id.boardLayout);
         buttonLayout = findViewById(R.id.buttonLayout);
+        textRoom = findViewById(R.id.textRoom);
+
+        String matchCode = getIntent().getStringExtra("MATCH_CODE");
+        turnoLocal = Integer.parseInt(getIntent().getStringExtra("TURNO_LOCAL"));
+        textRoom.setText(String.format("Sala %s", matchCode != null ? matchCode : "Error"));
 
         initializeBoard();
         initializeColumnButtons();
 
-        Evaluador<ConectaK> evaluador = new EvaluadorCK();
-        Jugador<ConectaK> jugadorIA = new JugadorAlfaBeta<>(evaluador, PROFUNDIDAD);
-
         new Thread(() -> {
-            int resultado = jugarPartida(jugadorIA);
+            int resultado = jugarPartida();
             runOnUiThread(() -> showGameOverDialog(resultado));
         }).start();
+
+        WebSocketSingleton.getInstance().setOnMessageListener(message -> {
+            if (message.startsWith("MOVE")) {
+                if (!isMyTurn()) {
+                    String[] parts = message.split(" ");
+                    if (parts.length > 1) {
+                        int col = Integer.parseInt(parts[1]) - 1;
+                        dropFicha(col, turnoLocal != 1);
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, "Error al mover el otro jugador.", Toast.LENGTH_SHORT).show());
+                    }
+                }else {
+                    runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, "El otro jugador intento mover cuando no era su turno.", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+    }
+
+    private boolean isMyTurn() {
+        return (turnoLocal == 1) == conectaK.turno1();
     }
 
     private void initializeBoard() {
@@ -88,8 +112,8 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
             final int column = col;
             button.setOnClickListener(v -> {
-                if (isHumanTurn) {
-                    dropFicha(column);
+                if (isMyTurn()) {
+                    dropFicha(column, turnoLocal == 1);
                 } else {
                     showMessage("No es tu turno");
                 }
@@ -103,7 +127,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         }
     }
 
-    private void paintCell(int row, int col, boolean isHuman) {
+    private void paintCell(int row, int col, boolean isTurno1) {
         runOnUiThread(() -> {
             int index = row * COLS + col;
             FrameLayout cellContainer = (FrameLayout) boardLayout.getChildAt(index);
@@ -111,7 +135,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
             View ficha = new View(this);
             GradientDrawable circle = new GradientDrawable();
             circle.setShape(GradientDrawable.OVAL);
-            circle.setColor(isHuman ? Color.RED : Color.YELLOW);
+            circle.setColor(isTurno1 ? Color.RED : Color.YELLOW);
             circle.setStroke(4, Color.BLACK);
 
             ficha.setBackground(circle);
@@ -127,56 +151,30 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         });
     }
 
-    private void dropFicha(int colNum) {
+    private void dropFicha(int colNum, boolean isTurno1) {
         int row = conectaK.siguienteFila(colNum);
         if (row == -1) {
             showMessage("Columna llena");
             return;
         }
 
+        // CAMBIO
+        if (isTurno1)
+            WebSocketSingleton.getInstance().sendMessage("MOVE " + (colNum + 1));
+
         conectaK = conectaK.mueveHumano(colNum);
-        paintCell(row, colNum, true);
-
-        if (isGameOver()) {
-            showGameOverDialog(getGameResult());
-        } else {
-            isHumanTurn = false;
-        }
-    }
-
-    private void handleAITurn(Jugador<ConectaK> jugadorIA) {
-        conectaK = jugadorIA.mueve(conectaK);
-        Movimiento lastMove = conectaK.getUltimoMov();
-
-        if (lastMove != null) {
-            paintCell(lastMove.f(), lastMove.c(), false);
-        }
-
-        runOnUiThread(() -> {
-            if (isGameOver()) {
-                showGameOverDialog(getGameResult());
-            } else {
-                isHumanTurn = true;
-            }
-        });
+        paintCell(row, colNum, isTurno1);
     }
 
     private boolean isGameOver() {
         return conectaK.ganaActual() || conectaK.ganaOtro() || conectaK.agotado();
     }
 
-    private int jugarPartida(Jugador<ConectaK> jugadorIA) {
+    private int jugarPartida() {
         while (!isGameOver()) {
-            if (conectaK.turno1()) {
-                isHumanTurn = true;
-                while (isHumanTurn) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ignored) {
-                    }
-                }
-            } else {
-                handleAITurn(jugadorIA);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {
             }
         }
         return getGameResult();
@@ -194,17 +192,40 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
     private void showGameOverDialog(int result) {
         runOnUiThread(() -> {
-            String message = result == 1 ? "Enhorabuena, has ganado!" : result == -1 ? "Lo siento, has perdido." : "Es un empate.";
+            String message;
+            if ((result == 1 && turnoLocal == 1) || (result == -1 && turnoLocal != 1)) {
+                message = "Enhorabuena, has ganado!";
+            } else if (result == 1 || result == -1) {
+                message = "Lo siento, has perdido.";
+            } else {
+                message = "Es un empate.";
+            }
+
+            if (turnoLocal == 1)
+                WebSocketSingleton.getInstance().sendMessage("END");
+
             new AlertDialog.Builder(this)
                     .setTitle("Juego Terminado")
                     .setMessage(message)
                     .setCancelable(false)
-                    .setPositiveButton("Aceptar", (dialog, which) -> finish())
+                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                        Intent intent = new Intent(this, InitialActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    })
                     .show();
         });
     }
 
+    private Toast currentToast;
     private void showMessage(String message) {
-        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> {
+            if (currentToast != null) {
+                currentToast.cancel();
+            }
+            currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+            currentToast.show();
+        });
     }
 }

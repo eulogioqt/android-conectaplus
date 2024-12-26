@@ -17,6 +17,15 @@
         android:theme="@style/Theme.ConectaPlus"
         tools:targetApi="31">
         <activity
+            android:name=".WaitingActivty"
+            android:exported="false" />
+        <activity
+            android:name=".JoinRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MultiplayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".PlayAIActivity"
             android:exported="false" />
         <activity

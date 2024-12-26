@@ -33,7 +33,7 @@ public class InitialActivity extends AppCompatActivity {
         });
 
         multiplayerPlayButton.setOnClickListener(view -> {
-            Intent intent = new Intent(InitialActivity.this, PlayMultiplayerActivity.class);
+            Intent intent = new Intent(InitialActivity.this, MultiplayerActivity.class);
             startActivity(intent);
         });
     }
