@@ -17,6 +17,9 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocaleHelper.setLocale(this, "en");
+
         setContentView(R.layout.activity_initial);
 
         iaPlayButton = findViewById(R.id.btn_play_ai);
