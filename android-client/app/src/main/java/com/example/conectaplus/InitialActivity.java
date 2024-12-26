@@ -35,7 +35,7 @@ public class InitialActivity extends AppCompatActivity {
         });
 
         historyButton.setOnClickListener(view -> {
-            Intent intent = new Intent(InitialActivity.this, ChatActivity.class);
+            Intent intent = new Intent(InitialActivity.this, HistoryActivity.class);
             startActivity(intent);
         });
 

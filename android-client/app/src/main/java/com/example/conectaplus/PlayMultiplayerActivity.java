@@ -18,12 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.conectaplus.conectak.ConectaK;
-import com.example.conectaplus.conectak.EvaluadorCK;
-import com.example.conectaplus.conectak.Movimiento;
-import com.example.conectaplus.jugadores.Evaluador;
-import com.example.conectaplus.jugadores.Jugador;
-import com.example.conectaplus.jugadores.JugadorAlfaBeta;
+import com.example.conectaplus.game.conectak.ConectaK;
 
 import java.util.ArrayList;
 import java.util.List;
