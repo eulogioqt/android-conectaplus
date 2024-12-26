@@ -41,6 +41,9 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
     private ConectaK conectaK;
     private GridLayout boardLayout;
     private LinearLayout buttonLayout;
+    private LinearLayout turnLayout;
+
+    private TextView turnoText;
     private TextView textRoom;
     private int turnoLocal;
 
@@ -60,12 +63,14 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
         boardLayout = findViewById(R.id.boardLayout);
         buttonLayout = findViewById(R.id.buttonLayout);
+        turnLayout = findViewById(R.id.turnLayout);
         textRoom = findViewById(R.id.textRoom);
 
         String matchCode = getIntent().getStringExtra("MATCH_CODE");
         turnoLocal = Integer.parseInt(getIntent().getStringExtra("TURNO_LOCAL"));
         textRoom.setText(String.format("Sala %s", matchCode != null ? matchCode : "Error"));
 
+        initializeTurnLayout();
         initializeBoard();
         initializeColumnButtons();
 
@@ -147,6 +152,36 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
     private boolean isLocalTurn() {
         return (turnoLocal == 1) == conectaK.turno1();
     }
+    private void updateTurnDisplay() {
+        turnoText.setText(String.format("%s", isLocalTurn() ? "Tú turno" : "Turno rival"));
+
+        GradientDrawable circle = (GradientDrawable) turnLayout.getChildAt(0).getBackground();
+        circle.setColor((turnoLocal == 1 && isLocalTurn()) || (turnoLocal != 1 && !isLocalTurn()) ? Color.RED : Color.YELLOW);
+    }
+
+    private void initializeTurnLayout() {
+        View ficha = new View(this);
+        GradientDrawable circle = new GradientDrawable();
+        circle.setShape(GradientDrawable.OVAL);
+        circle.setColor((turnoLocal == 1 && isLocalTurn()) || (turnoLocal != 1 && !isLocalTurn()) ? Color.RED : Color.YELLOW);
+        circle.setStroke(4, Color.BLACK);
+        ficha.setBackground(circle);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CELL_SIZE, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.width = (int) (CELL_SIZE * 0.75);
+        params.height = (int) (CELL_SIZE * 0.75);
+        ficha.setLayoutParams(params);
+
+        turnLayout.addView(ficha);
+
+        turnoText = new TextView(this);
+        turnoText.setText(String.format("%s", isLocalTurn() ? "Tú turno" : "Turno rival"));
+        turnoText.setTextSize(24);
+        turnoText.setPadding(24, 0, 0, 0);
+        turnLayout.setPadding(0, 0, 0, 32);
+
+        turnLayout.addView(turnoText);
+    }
 
     private void initializeBoard() {
         boardLayout.setRowCount(ROWS);
@@ -227,6 +262,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
             WebSocketSingleton.getInstance().sendMessage("MOVE " + (colNum + 1));
 
         conectaK = conectaK.mueveHumano(colNum);
+        runOnUiThread(this::updateTurnDisplay);
         paintCell(row, colNum, isTurno1);
     }
 
