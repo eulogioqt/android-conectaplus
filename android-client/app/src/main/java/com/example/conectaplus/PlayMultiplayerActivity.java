@@ -76,7 +76,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
         WebSocketSingleton.getInstance().setOnMessageListener(message -> {
             if (message.startsWith("MOVE")) {
-                if (!isMyTurn()) {
+                if (!isLocalTurn()) {
                     String[] parts = message.split(" ");
                     if (parts.length > 1) {
                         int col = Integer.parseInt(parts[1]) - 1;
@@ -144,7 +144,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isMyTurn() {
+    private boolean isLocalTurn() {
         return (turnoLocal == 1) == conectaK.turno1();
     }
 
@@ -177,7 +177,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
             final int column = col;
             button.setOnClickListener(v -> {
-                if (isMyTurn()) {
+                if (isLocalTurn()) {
                     dropFicha(column, turnoLocal == 1);
                 } else {
                     showMessage("No es tu turno");
@@ -223,8 +223,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
             return;
         }
 
-        // CAMBIO
-        if (isTurno1)
+        if (isLocalTurn())
             WebSocketSingleton.getInstance().sendMessage("MOVE " + (colNum + 1));
 
         conectaK = conectaK.mueveHumano(colNum);
