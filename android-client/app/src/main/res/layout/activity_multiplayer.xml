@@ -12,21 +12,22 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerInParent="true"
-        style="@android:style/Widget.ProgressBar.Small" />
+        style="@android:style/Widget.ProgressBar.Large" />
 
 
     <Button
         android:id="@+id/createRoomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Crear sala" />
 
     <Button
         android:id="@+id/joinRoomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Unirse a sala"
         android:layout_marginTop="16dp" />
 

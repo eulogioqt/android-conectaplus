@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MultiplayerActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private Button createRoomButton;
+    private Button joinRoomButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +20,11 @@ public class MultiplayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multiplayer);
 
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(android.view.View.GONE);
+        createRoomButton = findViewById(R.id.createRoomButton);
+        joinRoomButton = findViewById(R.id.joinRoomButton);
 
         showProgressBar();
         connectWebSocket();
-
-        Button createRoomButton = findViewById(R.id.createRoomButton);
-        Button joinRoomButton = findViewById(R.id.joinRoomButton);
 
         createRoomButton.setOnClickListener(v -> {
             createRoomAndNavigate();
@@ -37,26 +37,29 @@ public class MultiplayerActivity extends AppCompatActivity {
     }
 
     private void showProgressBar() {
-        progressBar.setVisibility(android.view.View.VISIBLE); // Mostrar el ProgressBar
+        progressBar.setVisibility(android.view.View.VISIBLE);
+        createRoomButton.setVisibility(android.view.View.GONE);
+        joinRoomButton.setVisibility(android.view.View.GONE);
     }
 
     private void hideProgressBar() {
-        progressBar.setVisibility(android.view.View.GONE); // Ocultar el ProgressBar
+        progressBar.setVisibility(android.view.View.GONE);
+        createRoomButton.setVisibility(android.view.View.VISIBLE);
+        joinRoomButton.setVisibility(android.view.View.VISIBLE);
     }
 
     private void connectWebSocket() {
         WebSocketSingleton webSocketSingleton = WebSocketSingleton.getInstance();
 
-        // Usar el callback para manejar éxito o fallo
         webSocketSingleton.connect(new WebSocketSingleton.Callback() {
             @Override
             public void onSuccess() {
-                runOnUiThread(MultiplayerActivity.this::hideProgressBar);  // Ocultar el ProgressBar en el hilo principal
+                runOnUiThread(MultiplayerActivity.this::hideProgressBar);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                runOnUiThread(MultiplayerActivity.this::showConnectionFailedDialog);  // Mostrar el diálogo de error
+                runOnUiThread(MultiplayerActivity.this::showConnectionFailedDialog);
             }
         });
     }
