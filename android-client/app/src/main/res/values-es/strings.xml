@@ -33,4 +33,11 @@
     <string name="ad_game_finished_win_desc">¡Enhorabuena, has ganado!</string>
     <string name="ad_game_finished_lose_desc">Lo siento, has perdido.</string>
     <string name="ad_game_finished_draw_desc">Es un empate.</string>
+
+    <string name="options">Opciones</string>
+    <string name="language">Idioma</string>
+    <string-array name="language_options">
+        <item>Español</item>
+        <item>Inglés</item>
+    </string-array>
 </resources>

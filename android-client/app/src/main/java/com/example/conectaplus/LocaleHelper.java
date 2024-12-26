@@ -25,4 +25,8 @@ public class LocaleHelper {
 
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
+
+    public static String getCurrentLanguage(Context context) {
+        return context.getResources().getConfiguration().getLocales().get(0).getLanguage();
+    }
 }

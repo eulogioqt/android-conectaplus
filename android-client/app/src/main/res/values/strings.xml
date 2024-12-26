@@ -2,6 +2,12 @@
     <string name="app_name">ConectaPlus</string>
 
     <string name="main_title">Welcome to ConectaPlus</string>
+    <string name="options">Options</string>
+    <string name="language">Language</string>
+    <string-array name="language_options">
+        <item>Spanish</item>
+        <item>English</item>
+    </string-array>
 
     <string name="btn_play_ai">Play with AI</string>
     <string name="btn_play_multiplayer">Multiplayer</string>

@@ -11,20 +11,24 @@ public class InitialActivity extends AppCompatActivity {
 
     private Button iaPlayButton;
     private Button multiplayerPlayButton;
+
+    private Button optionsButton;
     private Button historyButton;
+
     private Button exitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LocaleHelper.setLocale(this, "en");
-
         setContentView(R.layout.activity_initial);
 
         iaPlayButton = findViewById(R.id.btn_play_ai);
         multiplayerPlayButton = findViewById(R.id.btn_play_multiplayer);
+
+        optionsButton = findViewById(R.id.btn_options);
         historyButton = findViewById(R.id.btn_history);
+
         exitButton = findViewById(R.id.btn_exit);
 
         iaPlayButton.setOnClickListener(view -> {
@@ -37,10 +41,16 @@ public class InitialActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        optionsButton.setOnClickListener(view -> {
+            Intent intent = new Intent(InitialActivity.this, OptionsActivity.class);
+            startActivity(intent);
+        });
+
         historyButton.setOnClickListener(view -> {
             Intent intent = new Intent(InitialActivity.this, HistoryActivity.class);
             startActivity(intent);
         });
+
 
         exitButton.setOnClickListener(view -> {
             finish();
