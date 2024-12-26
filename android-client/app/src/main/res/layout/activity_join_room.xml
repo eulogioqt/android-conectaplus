@@ -28,7 +28,11 @@
         android:id="@+id/roomCodeInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce el código de la sala" />
+        android:hint="Introduce el código de la sala"
+        android:inputType="number"
+        android:maxLength="4"
+        android:digits="0123456789"
+        android:importantForAutofill="no"/>
 
     <Button
         android:id="@+id/acceptButton"

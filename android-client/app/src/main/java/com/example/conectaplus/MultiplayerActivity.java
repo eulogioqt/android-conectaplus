@@ -27,7 +27,6 @@ public class MultiplayerActivity extends AppCompatActivity {
         Button joinRoomButton = findViewById(R.id.joinRoomButton);
 
         createRoomButton.setOnClickListener(v -> {
-            // Enviar el mensaje para crear la sala
             createRoomAndNavigate();
         });
 

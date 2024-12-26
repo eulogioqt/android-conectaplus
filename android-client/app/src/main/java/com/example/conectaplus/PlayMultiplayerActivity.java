@@ -5,10 +5,13 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +25,13 @@ import com.example.conectaplus.jugadores.Evaluador;
 import com.example.conectaplus.jugadores.Jugador;
 import com.example.conectaplus.jugadores.JugadorAlfaBeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayMultiplayerActivity extends AppCompatActivity {
+
+    private List<String> chatMessages = new ArrayList<>();
+    private ArrayAdapter<String> chatAdapter;
 
     private static final int ROWS = 5;
     private static final int COLS = 6;
@@ -39,6 +48,9 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_multiplayer);
+
+        Button chatButton = findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(v -> openChatDialog());
 
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -74,6 +86,59 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
                     }
                 }else {
                     runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, "El otro jugador intento mover cuando no era su turno.", Toast.LENGTH_SHORT).show());
+                }
+            } else if (message.startsWith("CHAT")) {
+                String chatMessage = message.substring(5);
+                addChatMessage("Rival: " + chatMessage);
+            }
+        });
+    }
+
+    private void scrollToBottom(ListView listView) {
+        listView.post(() -> listView.setSelection(chatAdapter.getCount() - 1));
+    }
+
+    private void openChatDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View chatView = getLayoutInflater().inflate(R.layout.dialog_chat, null);
+
+        ListView chatListView = chatView.findViewById(R.id.chatListView);
+        EditText chatInput = chatView.findViewById(R.id.chatInput);
+        Button sendButton = chatView.findViewById(R.id.sendButton);
+
+        chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
+        chatListView.setAdapter(chatAdapter);
+
+        scrollToBottom(chatListView);
+
+        sendButton.setOnClickListener(v -> {
+            String message = chatInput.getText().toString().trim();
+            if (!message.isEmpty()) {
+                sendChatMessage(message);
+                chatInput.setText("");
+            }
+        });
+
+        builder.setView(chatView)
+                .setCancelable(true)
+                .create()
+                .show();
+    }
+
+    private void sendChatMessage(String message) {
+        WebSocketSingleton.getInstance().sendMessage("CHAT " + message);
+        addChatMessage("Tú: " + message);
+    }
+
+    private void addChatMessage(String message) {
+        runOnUiThread(() -> {
+            chatMessages.add(message);
+            if (chatAdapter != null) {
+                chatAdapter.notifyDataSetChanged();
+
+                ListView chatListView = findViewById(R.id.chatListView);
+                if (chatListView != null) {
+                    scrollToBottom(chatListView);
                 }
             }
         });
