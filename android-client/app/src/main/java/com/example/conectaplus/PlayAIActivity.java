@@ -45,8 +45,8 @@ public class PlayAIActivity extends AppCompatActivity {
 
         conectaK = new ConectaK(ROWS, COLS, WIN);
 
-        boardLayout = findViewById(R.id.boardLayout);
-        buttonLayout = findViewById(R.id.buttonLayout);
+        boardLayout = findViewById(R.id.board_layout);
+        buttonLayout = findViewById(R.id.button_layout);
 
         initializeBoard();
         initializeColumnButtons();
@@ -92,7 +92,7 @@ public class PlayAIActivity extends AppCompatActivity {
                 if (isHumanTurn) {
                     dropFicha(column);
                 } else {
-                    showMessage("No es tu turno");
+                    showMessage(getString(R.string.not_your_turn));
                 }
             });
 
@@ -131,7 +131,7 @@ public class PlayAIActivity extends AppCompatActivity {
     private void dropFicha(int colNum) {
         int row = conectaK.siguienteFila(colNum);
         if (row == -1) {
-            showMessage("Columna llena");
+            showMessage(getString(R.string.full_column));
             return;
         }
 
@@ -189,14 +189,14 @@ public class PlayAIActivity extends AppCompatActivity {
 
     private void showGameOverDialog(int result) {
         runOnUiThread(() -> {
-            String message = result == 1 ? "Enhorabuena, has ganado!" :
-                    result == -1 ? "Lo siento, has perdido." :
-                            "Es un empate.";
+            String message = result == 1 ? getString(R.string.ad_game_finished_win_desc) :
+                    result == -1 ? getString(R.string.ad_game_finished_lose_desc) :
+                            getString(R.string.ad_game_finished_draw_desc);
             new AlertDialog.Builder(this)
-                    .setTitle("Juego Terminado")
+                    .setTitle(getString(R.string.ad_game_finished))
                     .setMessage(message)
                     .setCancelable(false)
-                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                    .setPositiveButton(getString(R.string.btn_accept), (dialog, which) -> {
                         Intent intent = new Intent(this, InitialActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

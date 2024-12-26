@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class JoinRoomActivity extends AppCompatActivity {
+public class JoinMatchActivity extends AppCompatActivity {
 
     private EditText roomCodeInput;
     private Button acceptButton;
@@ -17,11 +17,11 @@ public class JoinRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_room);
+        setContentView(R.layout.activity_join_match);
 
-        roomCodeInput = findViewById(R.id.roomCodeInput);
-        acceptButton = findViewById(R.id.acceptButton);
-        errorText = findViewById(R.id.errorText);
+        roomCodeInput = findViewById(R.id.match_code_input);
+        acceptButton = findViewById(R.id.accept_button);
+        errorText = findViewById(R.id.error_text);
 
         acceptButton.setOnClickListener(v -> {
             String roomCode = roomCodeInput.getText().toString();
@@ -38,7 +38,7 @@ public class JoinRoomActivity extends AppCompatActivity {
 
         webSocketSingleton.setOnMessageListener(message -> {
             if (message.startsWith("START")) {
-                Intent intent = new Intent(JoinRoomActivity.this, PlayMultiplayerActivity.class);
+                Intent intent = new Intent(JoinMatchActivity.this, PlayMultiplayerActivity.class);
                 intent.putExtra("MATCH_CODE", matchCode);
                 intent.putExtra("TURNO_LOCAL", "2");
                 startActivity(intent);
@@ -46,7 +46,7 @@ public class JoinRoomActivity extends AppCompatActivity {
                 finish();
             } else if (message.startsWith("DENY")) {
                 runOnUiThread(() -> {
-                    errorText.setText("No se pudo unir a la sala MatchCode " + matchCode);
+                    errorText.setText(String.format("%s %s", getString(R.string.cannot_join_match), matchCode));
                     errorText.setVisibility(TextView.VISIBLE);
                 });
             }

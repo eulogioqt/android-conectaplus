@@ -47,7 +47,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_multiplayer);
 
-        Button chatButton = findViewById(R.id.chatButton);
+        Button chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(v -> openChatDialog());
 
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
@@ -56,14 +56,14 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
         conectaK = new ConectaK(ROWS, COLS, WIN);
 
-        boardLayout = findViewById(R.id.boardLayout);
-        buttonLayout = findViewById(R.id.buttonLayout);
-        turnLayout = findViewById(R.id.turnLayout);
-        textRoom = findViewById(R.id.textRoom);
+        boardLayout = findViewById(R.id.board_layout);
+        buttonLayout = findViewById(R.id.button_layout);
+        turnLayout = findViewById(R.id.turn_layout);
+        textRoom = findViewById(R.id.match_text);
 
         String matchCode = getIntent().getStringExtra("MATCH_CODE");
         turnoLocal = Integer.parseInt(getIntent().getStringExtra("TURNO_LOCAL"));
-        textRoom.setText(String.format("Sala %s", matchCode != null ? matchCode : "Error"));
+        textRoom.setText(String.format("%s %s", getString(R.string.match_string), matchCode != null ? matchCode : "?"));
 
         initializeTurnLayout();
         initializeBoard();
@@ -82,14 +82,14 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
                         int col = Integer.parseInt(parts[1]) - 1;
                         dropFicha(col, turnoLocal != 1);
                     } else {
-                        runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, "Error al mover el otro jugador.", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, getString(R.string.error_moving_other_player), Toast.LENGTH_SHORT).show());
                     }
                 }else {
-                    runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, "El otro jugador intento mover cuando no era su turno.", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(PlayMultiplayerActivity.this, getString(R.string.error_moving_other_player_not_his_turn), Toast.LENGTH_SHORT).show());
                 }
             } else if (message.startsWith("CHAT")) {
                 String chatMessage = message.substring(5);
-                addChatMessage("Rival: " + chatMessage);
+                addChatMessage(String.format("%s: %s", getString(R.string.rival_string), chatMessage));
             }
         });
     }
@@ -102,8 +102,8 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View chatView = getLayoutInflater().inflate(R.layout.dialog_chat, null);
 
-        ListView chatListView = chatView.findViewById(R.id.chatListView);
-        EditText chatInput = chatView.findViewById(R.id.chatInput);
+        ListView chatListView = chatView.findViewById(R.id.chat_list_view);
+        EditText chatInput = chatView.findViewById(R.id.chat_input);
         Button sendButton = chatView.findViewById(R.id.sendButton);
 
         chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
@@ -127,7 +127,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
 
     private void sendChatMessage(String message) {
         WebSocketSingleton.getInstance().sendMessage("CHAT " + message);
-        addChatMessage("Tú: " + message);
+        addChatMessage(String.format("%s: %s", getString(R.string.you_string), message));
     }
 
     private void addChatMessage(String message) {
@@ -136,7 +136,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
             if (chatAdapter != null) {
                 chatAdapter.notifyDataSetChanged();
 
-                ListView chatListView = findViewById(R.id.chatListView);
+                ListView chatListView = findViewById(R.id.chat_list_view);
                 if (chatListView != null) {
                     scrollToBottom(chatListView);
                 }
@@ -148,7 +148,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         return (turnoLocal == 1) == conectaK.turno1();
     }
     private void updateTurnDisplay() {
-        turnoText.setText(String.format("%s", isLocalTurn() ? "Tú turno" : "Turno rival"));
+        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
 
         GradientDrawable circle = (GradientDrawable) turnLayout.getChildAt(0).getBackground();
         circle.setColor((turnoLocal == 1 && isLocalTurn()) || (turnoLocal != 1 && !isLocalTurn()) ? Color.RED : Color.YELLOW);
@@ -170,7 +170,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         turnLayout.addView(ficha);
 
         turnoText = new TextView(this);
-        turnoText.setText(String.format("%s", isLocalTurn() ? "Tú turno" : "Turno rival"));
+        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
         turnoText.setTextSize(24);
         turnoText.setPadding(24, 0, 0, 0);
         turnLayout.setPadding(0, 0, 0, 32);
@@ -210,7 +210,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
                 if (isLocalTurn()) {
                     dropFicha(column, turnoLocal == 1);
                 } else {
-                    showMessage("No es tu turno");
+                    showMessage(getString(R.string.not_your_turn));
                 }
             });
 
@@ -249,7 +249,7 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
     private void dropFicha(int colNum, boolean isTurno1) {
         int row = conectaK.siguienteFila(colNum);
         if (row == -1) {
-            showMessage("Columna llena");
+            showMessage(getString(R.string.full_column));
             return;
         }
 
@@ -289,21 +289,21 @@ public class PlayMultiplayerActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             String message;
             if ((result == 1 && turnoLocal == 1) || (result == -1 && turnoLocal != 1)) {
-                message = "Enhorabuena, has ganado!";
+                message = getString(R.string.ad_game_finished_win_desc);
             } else if (result == 1 || result == -1) {
-                message = "Lo siento, has perdido.";
+                message = getString(R.string.ad_game_finished_lose_desc);
             } else {
-                message = "Es un empate.";
+                message = getString(R.string.ad_game_finished_draw_desc);
             }
 
             if (turnoLocal == 1)
                 WebSocketSingleton.getInstance().sendMessage("END");
 
             new AlertDialog.Builder(this)
-                    .setTitle("Juego Terminado")
+                    .setTitle(getString(R.string.ad_game_finished))
                     .setMessage(message)
                     .setCancelable(false)
-                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                    .setPositiveButton(getString(R.string.btn_accept), (dialog, which) -> {
                         Intent intent = new Intent(this, InitialActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

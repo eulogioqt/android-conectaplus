@@ -1,18 +1,41 @@
 <resources>
     <string name="app_name">ConectaPlus</string>
-    <!-- Nombre de la app -->
 
-    <!-- Título de la pantalla principal -->
-    <string name="main_title">Bienvenido a ConectaPlus</string>
+    <string name="main_title">Welcome to ConectaPlus</string>
 
-    <!-- Botones principales -->
-    <string name="btn_play_ai">Jugar contra IA</string>
-    <string name="btn_play_multiplayer">Jugar multijugador</string>
-    <string name="btn_options">Opciones</string>
-    <string name="btn_about">Acerca de</string>
-    <string name="btn_exit">Salir</string>
-    <string name="btn_history">Historial</string>
+    <string name="btn_play_ai">Play with AI</string>
+    <string name="btn_play_multiplayer">Multiplayer</string>
+    <string name="btn_options">Options</string>
+    <string name="btn_about">About</string>
+    <string name="btn_exit">Exit</string>
+    <string name="btn_history">History</string>
 
-    <!-- Texto del pie de página (opcional) -->
-    <string name="app_version">Versión 1.0.0</string>
+    <string name="match_string">Match</string>
+    <string name="you_string">You</string>
+    <string name="rival_string">Rival</string>
+    <string name="turn_you_string">Your turn</string>
+    <string name="turn_rival_string">Rival\'s turn</string>
+    <string name="match_code_hint">Introduce match code</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_chat">Chat</string>
+    <string name="btn_create_match">Create match</string>
+    <string name="btn_join_match">Join match</string>
+    <string name="waiting_text">Waiting for second player…</string>
+    <string name="write_message">Write a message...</string>
+    <string name="btn_send">Send</string>
+
+    <string name="cannot_join_match">Can not join the match</string>
+    <string name="cannot_create_match">Can not create a match</string>
+    <string name="not_your_turn">Is not your turn</string>
+    <string name="full_column">Full column</string>
+    <string name="error_moving_other_player">Error while moving the other player</string>
+    <string name="error_moving_other_player_not_his_turn">The other player tried to move while is not his turn</string>
+
+    <string name="ad_game_finished">Game Finished</string>
+    <string name="ad_game_finished_win_desc">Congratulations! You won!</string>
+    <string name="ad_game_finished_lose_desc">You lost.</string>
+    <string name="ad_game_finished_draw_desc">It is a draw.</string>
+
+    <string name="ad_connection_error">Connection error.</string>
+    <string name="ad_connection_error_desc">Can not connect with the server. Try again.</string>
 </resources>

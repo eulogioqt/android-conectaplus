@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
     <ListView
-        android:id="@+id/chatListView"
+        android:id="@+id/chat_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -22,16 +23,19 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/chatInput"
+            android:id="@+id/chat_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Escribe un mensaje" />
+            android:hint="@string/write_message"
+            android:minHeight="48dp"
+            android:textColorHint="#546E7A" />
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enviar" />
+            android:text="@string/btn_send"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 </LinearLayout>

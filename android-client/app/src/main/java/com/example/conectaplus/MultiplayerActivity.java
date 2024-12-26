@@ -19,9 +19,9 @@ public class MultiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
 
-        progressBar = findViewById(R.id.progressBar);
-        createRoomButton = findViewById(R.id.createRoomButton);
-        joinRoomButton = findViewById(R.id.joinRoomButton);
+        progressBar = findViewById(R.id.progress_bar);
+        createRoomButton = findViewById(R.id.create_match_button);
+        joinRoomButton = findViewById(R.id.join_match_button);
 
         showProgressBar();
         connectWebSocket();
@@ -31,7 +31,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         });
 
         joinRoomButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MultiplayerActivity.this, JoinRoomActivity.class);
+            Intent intent = new Intent(MultiplayerActivity.this, JoinMatchActivity.class);
             startActivity(intent);
         });
     }
@@ -66,9 +66,9 @@ public class MultiplayerActivity extends AppCompatActivity {
 
     private void showConnectionFailedDialog() {
         new AlertDialog.Builder(MultiplayerActivity.this)
-                .setTitle("Error de conexión")
-                .setMessage("No se pudo conectar al servidor. Intente nuevamente.")
-                .setPositiveButton("Aceptar", (dialog, which) -> {
+                .setTitle(getString(R.string.ad_connection_error))
+                .setMessage(getString(R.string.ad_connection_error_desc))
+                .setPositiveButton(getString(R.string.btn_accept), (dialog, which) -> {
                     finish();
                 })
                 .setCancelable(false)
@@ -90,7 +90,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                     intent.putExtra("MATCH_CODE", matchCode);
                     startActivity(intent);
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MultiplayerActivity.this, "Error al crear la sala.", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MultiplayerActivity.this, getString(R.string.cannot_create_match), Toast.LENGTH_SHORT).show());
                 }
             }
         });

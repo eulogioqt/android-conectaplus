@@ -9,26 +9,25 @@
     tools:context=".MultiplayerActivity">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         style="@android:style/Widget.ProgressBar.Large" />
 
 
     <Button
-        android:id="@+id/createRoomButton"
+        android:id="@+id/create_match_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="Crear sala" />
+        android:text="@string/btn_create_match" />
 
     <Button
-        android:id="@+id/joinRoomButton"
+        android:id="@+id/join_match_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="Unirse a sala"
+        android:text="@string/btn_join_match"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

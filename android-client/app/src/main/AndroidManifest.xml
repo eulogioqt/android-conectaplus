@@ -23,7 +23,7 @@
             android:name=".WaitingActivty"
             android:exported="false" />
         <activity
-            android:name=".JoinRoomActivity"
+            android:name=".JoinMatchActivity"
             android:exported="false" />
         <activity
             android:name=".MultiplayerActivity"

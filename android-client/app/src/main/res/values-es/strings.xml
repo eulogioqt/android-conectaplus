@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ConectaPlus</string>
+    <string name="ad_connection_error">Error de conexión</string>
+    <string name="ad_connection_error_desc">No se pudo conectar al servidor. Intente nuevamente.</string>
+    <string name="main_title">Bienvenido a ConectaPlus</string>
+    <string name="btn_play_ai">Jugar contra IA</string>
+    <string name="btn_play_multiplayer">Multijugador</string>
+    <string name="btn_options">Opciones</string>
+    <string name="btn_about">Acerca de</string>
+    <string name="btn_exit">Salir</string>
+    <string name="btn_history">Historial</string>
+    <string name="match_string">Sala</string>
+    <string name="you_string">Tu</string>
+    <string name="rival_string">Rival</string>
+    <string name="turn_you_string">Tu turno</string>
+    <string name="turn_rival_string">Turno rival</string>
+    <string name="match_code_hint">Introduce el código de la sala</string>
+    <string name="btn_accept">Aceptar</string>
+    <string name="btn_chat">Chat</string>
+    <string name="btn_create_match">Crear sala</string>
+    <string name="btn_join_match">Unirse a sala</string>
+    <string name="waiting_text">Esperando segundo jugador…</string>
+    <string name="write_message">Escribe un mensaje…</string>
+    <string name="btn_send">Enviar</string>
+    <string name="cannot_join_match">No se pudo unir a la sala</string>
+    <string name="cannot_create_match">Error al crear la sala.</string>
+    <string name="not_your_turn">No es tu turno</string>
+    <string name="full_column">Columna llena</string>
+    <string name="error_moving_other_player">Error al mover el otro jugador.</string>
+    <string name="error_moving_other_player_not_his_turn">El otro jugador intento mover cuando no era su turno.</string>
+    <string name="ad_game_finished">Juego Terminado</string>
+    <string name="ad_game_finished_win_desc">¡Enhorabuena, has ganado!</string>
+    <string name="ad_game_finished_lose_desc">Lo siento, has perdido.</string>
+    <string name="ad_game_finished_draw_desc">Es un empate.</string>
+</resources>

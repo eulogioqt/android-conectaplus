@@ -18,12 +18,12 @@ public class WaitingActivty extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_waiting_activty);
 
-        waitingText = findViewById(R.id.waitingText);
-        roomCodeText = findViewById(R.id.roomCodeText);
+        waitingText = findViewById(R.id.waiting_text);
+        roomCodeText = findViewById(R.id.match_code_text);
 
         String matchCode = getIntent().getStringExtra("MATCH_CODE");
 
-        roomCodeText.setText(String.format("Sala %s", matchCode != null ? matchCode : "Error"));
+        roomCodeText.setText(String.format("%s %s", getString(R.string.match_string), matchCode != null ? matchCode : "?"));
 
         WebSocketSingleton.getInstance().setOnMessageListener(message -> {
             if (message.startsWith("START")) {
