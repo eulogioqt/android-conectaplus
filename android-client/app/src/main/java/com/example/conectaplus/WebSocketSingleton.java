@@ -32,7 +32,8 @@ public class WebSocketSingleton {
             return;
         }
 
-        Request request = new Request.Builder().url("ws://192.168.100.2:8765").build();
+        // "ws://192.168.100.2:8765"
+        Request request = new Request.Builder().url(WS_URL).build();
 
         WebSocketListener listener = new WebSocketListener() {
             @Override
