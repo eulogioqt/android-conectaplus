@@ -11,7 +11,7 @@
     <string name="btn_options">Opciones</string>
     <string name="btn_about">Acerca de</string>
     <string name="btn_exit">Salir</string>
-    <string name="btn_chat">Chat</string>
+    <string name="btn_history">Historial</string>
 
     <!-- Texto del pie de página (opcional) -->
     <string name="app_version">Versión 1.0.0</string>
