@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">ConectaPlus</string>
 
+    <!-- Main Menu -->
     <string name="main_title">Welcome to ConectaPlus</string>
-    <string name="options">Options</string>
-    <string name="language">Language</string>
-    <string-array name="language_options">
-        <item>Spanish</item>
-        <item>English</item>
-    </string-array>
-
     <string name="btn_play_ai">Play with AI</string>
     <string name="btn_play_multiplayer">Multiplayer</string>
     <string name="btn_options">Options</string>
@@ -16,32 +10,73 @@
     <string name="btn_exit">Exit</string>
     <string name="btn_history">History</string>
 
+    <!-- Gameplay -->
     <string name="match_string">Match</string>
     <string name="you_string">You</string>
     <string name="rival_string">Rival</string>
     <string name="turn_you_string">Your turn</string>
     <string name="turn_rival_string">Rival\'s turn</string>
-    <string name="match_code_hint">Introduce match code</string>
+    <string name="match_code_hint">Enter match code</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_chat">Chat</string>
     <string name="btn_create_match">Create match</string>
     <string name="btn_join_match">Join match</string>
-    <string name="waiting_text">Waiting for second player…</string>
+    <string name="waiting_text">Waiting for the second player…</string>
     <string name="write_message">Write a message...</string>
     <string name="btn_send">Send</string>
 
-    <string name="cannot_join_match">Can not join the match</string>
-    <string name="cannot_create_match">Can not create a match</string>
-    <string name="not_your_turn">Is not your turn</string>
-    <string name="full_column">Full column</string>
+    <!-- Errors -->
+    <string name="cannot_join_match">Cannot join the match</string>
+    <string name="cannot_create_match">Cannot create a match</string>
+    <string name="not_your_turn">It is not your turn</string>
+    <string name="full_column">Column is full</string>
     <string name="error_moving_other_player">Error while moving the other player</string>
-    <string name="error_moving_other_player_not_his_turn">The other player tried to move while is not his turn</string>
+    <string name="error_moving_other_player_not_his_turn">The other player tried to move when it was not their turn</string>
 
+    <!-- Game Result -->
     <string name="ad_game_finished">Game Finished</string>
     <string name="ad_game_finished_win_desc">Congratulations! You won!</string>
     <string name="ad_game_finished_lose_desc">You lost.</string>
     <string name="ad_game_finished_draw_desc">It is a draw.</string>
 
-    <string name="ad_connection_error">Connection error.</string>
-    <string name="ad_connection_error_desc">Can not connect with the server. Try again.</string>
+    <!-- Connection Errors -->
+    <string name="ad_connection_error">Connection Error</string>
+    <string name="ad_connection_error_desc">Cannot connect to the server. Please try again.</string>
+
+    <!-- Settings -->
+    <string name="options">Options</string>
+    <string name="language">Language</string>
+    <string-array name="language_options">
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
+
+    <!-- New Strings -->
+    <string name="history_title">Match History</string>
+    <string name="history_description">Here you can review the results of your matches.</string>
+    <string name="btn_clear_history">Clear History</string>
+    <string name="ad_clear_history_title">Clear History</string>
+    <string name="ad_clear_history_message">Are you sure you want to clear all match history?</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="history_cleared">History cleared successfully.</string>
+    <string name="error_no_results">No results to display.</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_message">An unexpected error occurred.</string>
+    <string name="btn_details">Details</string>
+    <string name="btn_close">Close</string>
+    <string name="history_item_result">Result</string>
+    <string name="history_item_timestamp">Timestamp</string>
+
+    <string name="about_title">About ConectaPlus</string>
+    <string name="about_description">ConectaPlus is a Connect 4 game where you can play online with friends or against an AI. Have fun challenging yourself or others!</string>
+    <string name="about_rules_title">Game Rules</string>
+    <string name="about_rules_description">1. Players take turns dropping discs into the grid.\n2. The goal is to connect 4 of your discs in a row, column, or diagonal.\n3. The first player to achieve this wins!\n4. If the grid is full and no one connects 4, the game ends in a draw.</string>
+    <string name="about_creators_title">Creators</string>
+    <string name="creator1_name">Antonio Cañete Baena</string>
+    <string name="creator1_link">GitHub Profile</string>
+    <string name="creator2_name">Creator 2</string>
+    <string name="creator2_link">GitHub Profile</string>
+
 </resources>

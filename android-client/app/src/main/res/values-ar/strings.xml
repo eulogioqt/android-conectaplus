@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">كونيكتا بلاس</string>
+
+    <!-- القائمة الرئيسية -->
+    <string name="main_title">مرحبًا بك في كونيكتا بلاس</string>
+    <string name="btn_play_ai">اللعب مع الذكاء الاصطناعي</string>
+    <string name="btn_play_multiplayer">متعدد اللاعبين</string>
+    <string name="btn_options">الإعدادات</string>
+    <string name="btn_about">حول التطبيق</string>
+    <string name="btn_exit">خروج</string>
+    <string name="btn_history">السجل</string>
+
+    <!-- اللعب -->
+    <string name="match_string">المباراة</string>
+    <string name="you_string">أنت</string>
+    <string name="rival_string">الخصم</string>
+    <string name="turn_you_string">دورك</string>
+    <string name="turn_rival_string">دور الخصم</string>
+    <string name="match_code_hint">أدخل رمز المباراة</string>
+    <string name="btn_accept">موافق</string>
+    <string name="btn_chat">الدردشة</string>
+    <string name="btn_create_match">إنشاء مباراة</string>
+    <string name="btn_join_match">الانضمام إلى مباراة</string>
+    <string name="waiting_text">بانتظار اللاعب الثاني…</string>
+    <string name="write_message">اكتب رسالة...</string>
+    <string name="btn_send">إرسال</string>
+
+    <!-- الأخطاء -->
+    <string name="cannot_join_match">تعذر الانضمام إلى المباراة</string>
+    <string name="cannot_create_match">تعذر إنشاء المباراة</string>
+    <string name="not_your_turn">ليس دورك</string>
+    <string name="full_column">العمود ممتلئ</string>
+    <string name="error_moving_other_player">خطأ أثناء تحرك اللاعب الآخر</string>
+    <string name="error_moving_other_player_not_his_turn">حاول اللاعب الآخر التحرك عندما لم يكن دوره</string>
+
+    <!-- نتيجة اللعبة -->
+    <string name="ad_game_finished">انتهت اللعبة</string>
+    <string name="ad_game_finished_win_desc">تهانينا! لقد فزت!</string>
+    <string name="ad_game_finished_lose_desc">لقد خسرت.</string>
+    <string name="ad_game_finished_draw_desc">إنها تعادل.</string>
+
+    <!-- أخطاء الاتصال -->
+    <string name="ad_connection_error">خطأ في الاتصال</string>
+    <string name="ad_connection_error_desc">لا يمكن الاتصال بالخادم. حاول مرة أخرى.</string>
+
+    <!-- الإعدادات -->
+    <string name="options">الإعدادات</string>
+    <string name="language">اللغة</string>
+    <string-array name="language_options">
+        <item>العربية</item>
+        <item>الإنجليزية</item>
+        <item>عربي</item>
+    </string-array>
+
+    <!-- النصوص الجديدة -->
+    <string name="history_title">سجل المباريات</string>
+    <string name="history_description">يمكنك هنا مراجعة نتائج مبارياتك.</string>
+    <string name="btn_clear_history">مسح السجل</string>
+    <string name="ad_clear_history_title">مسح السجل</string>
+    <string name="ad_clear_history_message">هل أنت متأكد أنك تريد مسح كل سجل المباريات؟</string>
+    <string name="btn_yes">نعم</string>
+    <string name="btn_no">لا</string>
+    <string name="history_cleared">تم مسح السجل بنجاح.</string>
+    <string name="error_no_results">لا توجد نتائج لعرضها.</string>
+    <string name="error_dialog_title">خطأ</string>
+    <string name="error_dialog_message">حدث خطأ غير متوقع.</string>
+    <string name="btn_details">التفاصيل</string>
+    <string name="btn_close">إغلاق</string>
+    <string name="history_item_result">النتيجة</string>
+    <string name="history_item_timestamp">التاريخ والوقت</string>
+
+    <string name="about_title">حول كونكتا بلاس</string>
+    <string name="about_description">كونكتا بلاس هي لعبة اتصال 4 حيث يمكنك اللعب عبر الإنترنت مع الأصدقاء أو ضد الذكاء الاصطناعي. استمتع بتحدي نفسك أو الآخرين!</string>
+    <string name="about_rules_title">قواعد اللعبة</string>
+    <string name="about_rules_description">1. يتناوب اللاعبون على إسقاط الأقراص في الشبكة.\n2. الهدف هو توصيل 4 أقراص في صف، عمود، أو قطري.\n3. أول لاعب يحقق ذلك يفوز!\n4. إذا امتلأت الشبكة ولم يوصل أحد 4، تنتهي اللعبة بالتعادل.</string>
+    <string name="about_creators_title">المبدعون</string>
+    <string name="creator1_name">المبدع 1</string>
+    <string name="creator1_link">الملف الشخصي على جيثب</string>
+    <string name="creator2_name">المبدع 2</string>
+    <string name="creator2_link">الملف الشخصي على جيثب</string>
+
+</resources>

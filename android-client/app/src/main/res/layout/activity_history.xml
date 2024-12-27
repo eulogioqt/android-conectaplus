@@ -1,10 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistoryActivity">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FAFAFA">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Título del historial -->
+    <TextView
+        android:id="@+id/history_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history_title"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="8dp" />
+
+    <!-- Descripción del historial -->
+    <TextView
+        android:id="@+id/history_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history_description"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <!-- ListView para mostrar el historial -->
+    <ListView
+        android:id="@+id/history_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:background="#FFFFFF" />
+
+    <!-- Botón para borrar el historial -->
+    <Button
+        android:id="@+id/clear_history_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF5252"
+        android:text="@string/btn_clear_history"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+</LinearLayout>

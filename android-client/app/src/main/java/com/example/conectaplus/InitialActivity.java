@@ -2,7 +2,6 @@ package com.example.conectaplus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ public class InitialActivity extends AppCompatActivity {
     private Button optionsButton;
     private Button historyButton;
 
+    private Button aboutButton;
     private Button exitButton;
 
     @Override
@@ -28,6 +28,8 @@ public class InitialActivity extends AppCompatActivity {
 
         optionsButton = findViewById(R.id.btn_options);
         historyButton = findViewById(R.id.btn_history);
+        aboutButton = findViewById(R.id.btn_about);
+
 
         exitButton = findViewById(R.id.btn_exit);
 
@@ -51,6 +53,10 @@ public class InitialActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        aboutButton.setOnClickListener(view -> {
+            Intent intent = new Intent(InitialActivity.this, AboutActivity.class);
+            startActivity(intent);
+        });
 
         exitButton.setOnClickListener(view -> {
             finish();

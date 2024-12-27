@@ -21,6 +21,8 @@ import com.example.conectaplus.game.jugadores.Evaluador;
 import com.example.conectaplus.game.jugadores.Jugador;
 import com.example.conectaplus.game.jugadores.JugadorAlfaBeta;
 
+import com.example.conectaplus.database.GameDatabaseHelper;
+
 public class PlayAIActivity extends AppCompatActivity {
 
     private static final int ROWS = 5;
@@ -189,9 +191,22 @@ public class PlayAIActivity extends AppCompatActivity {
 
     private void showGameOverDialog(int result) {
         runOnUiThread(() -> {
-            String message = result == 1 ? getString(R.string.ad_game_finished_win_desc) :
-                    result == -1 ? getString(R.string.ad_game_finished_lose_desc) :
-                            getString(R.string.ad_game_finished_draw_desc);
+            GameDatabaseHelper dbHelper = new GameDatabaseHelper(this);
+            String message;
+
+            if (result == 1) {
+                message = getString(R.string.ad_game_finished_win_desc);
+                dbHelper.addResult("win");
+            } else if (result == -1) {
+                message = getString(R.string.ad_game_finished_lose_desc);
+                dbHelper.addResult("loss");
+            } else {
+                message = getString(R.string.ad_game_finished_draw_desc);
+                dbHelper.addResult("draw");
+            }
+
+            dbHelper.close();
+
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.ad_game_finished))
                     .setMessage(message)
@@ -205,6 +220,7 @@ public class PlayAIActivity extends AppCompatActivity {
                     .show();
         });
     }
+
 
     private Toast currentToast;
     private void showMessage(String message) {

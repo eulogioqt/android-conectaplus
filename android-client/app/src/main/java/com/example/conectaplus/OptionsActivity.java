@@ -27,7 +27,22 @@ public class OptionsActivity extends AppCompatActivity {
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedLanguage = position == 0 ? "es" : "en";
+                //0 es, 1 en, 2 ar
+                String selectedLanguage;
+                switch (position) {
+                    case 0:
+                        selectedLanguage = "es";
+                        break;
+                    case 1:
+                        selectedLanguage = "en";
+                        break;
+                    case 2:
+                        selectedLanguage = "ar";
+                        break;
+                    default:
+                        selectedLanguage = "en";
+                }
+
                 if (!selectedLanguage.equals(LocaleHelper.getCurrentLanguage(OptionsActivity.this))) {
                     LocaleHelper.setLocale(OptionsActivity.this, selectedLanguage);
 

@@ -28,7 +28,7 @@
     <string name="not_your_turn">No es tu turno</string>
     <string name="full_column">Columna llena</string>
     <string name="error_moving_other_player">Error al mover el otro jugador.</string>
-    <string name="error_moving_other_player_not_his_turn">El otro jugador intento mover cuando no era su turno.</string>
+    <string name="error_moving_other_player_not_his_turn">El otro jugador intentó mover cuando no era su turno.</string>
     <string name="ad_game_finished">Juego Terminado</string>
     <string name="ad_game_finished_win_desc">¡Enhorabuena, has ganado!</string>
     <string name="ad_game_finished_lose_desc">Lo siento, has perdido.</string>
@@ -39,5 +39,34 @@
     <string-array name="language_options">
         <item>Español</item>
         <item>Inglés</item>
+        <item>Arabe</item>
     </string-array>
+
+    <!-- Nuevos strings añadidos -->
+    <string name="history_title">Historial de Partidas</string>
+    <string name="history_description">Aquí puedes consultar los resultados de tus partidas.</string>
+    <string name="btn_clear_history">Borrar Historial</string>
+    <string name="ad_clear_history_title">Borrar Historial</string>
+    <string name="ad_clear_history_message">¿Estás seguro de que deseas borrar todo el historial de partidas?</string>
+    <string name="btn_yes">Sí</string>
+    <string name="btn_no">No</string>
+    <string name="history_cleared">Historial borrado con éxito.</string>
+    <string name="error_no_results">No hay resultados para mostrar.</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_message">Se produjo un error inesperado.</string>
+    <string name="btn_details">Detalles</string>
+    <string name="btn_close">Cerrar</string>
+    <string name="history_item_result">Resultado</string>
+    <string name="history_item_timestamp">Fecha</string>
+
+    <string name="about_title">Acerca de ConectaPlus</string>
+    <string name="about_description">ConectaPlus es un juego de Conecta 4 donde puedes jugar en línea con amigos o contra una IA. ¡Diviértete desafiándote a ti mismo o a otros!</string>
+    <string name="about_rules_title">Reglas del Juego</string>
+    <string name="about_rules_description">1. Los jugadores se turnan para dejar fichas en la cuadrícula.\n2. El objetivo es conectar 4 fichas en una fila, columna o diagonal.\n3. ¡El primer jugador en lograrlo gana!\n4. Si la cuadrícula está llena y nadie conecta 4, el juego termina en empate.</string>
+    <string name="about_creators_title">Creadores</string>
+    <string name="creator1_name">Creador 1</string>
+    <string name="creator1_link">Perfil de Github</string>
+    <string name="creator2_name">Creador 2</string>
+    <string name="creator2_link">Perfil de Github</string>
+
 </resources>
