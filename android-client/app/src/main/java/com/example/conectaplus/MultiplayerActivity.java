@@ -1,5 +1,6 @@
 package com.example.conectaplus;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,11 +8,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.conectaplus.websocket.WebsocketActivity;
+import com.example.conectaplus.websocket.WebSocketActivity;
 import com.example.conectaplus.websocket.ConnectionCallback;
+import com.example.conectaplus.websocket.WebSocketHandler;
 import com.example.conectaplus.websocket.WebSocketSingleton;
 
-public class MultiplayerActivity extends WebsocketActivity {
+public class MultiplayerActivity extends WebSocketActivity {
 
     private ProgressBar progressBar;
     private Button createRoomButton;
@@ -20,7 +22,6 @@ public class MultiplayerActivity extends WebsocketActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        claimDisconnectionAlert();
         setContentView(R.layout.activity_multiplayer);
 
         progressBar = findViewById(R.id.progress_bar);
@@ -70,7 +71,7 @@ public class MultiplayerActivity extends WebsocketActivity {
 
             @Override
             public void onDisconnect() {
-                runOnUiThread(MultiplayerActivity.this::showDisconnectedDialog);
+                runOnUiThread(() -> WebSocketHandler.showDisconnectedDialog(MultiplayerActivity.this));
             }
         });
         webSocketSingleton.connect();
@@ -113,7 +114,7 @@ public class MultiplayerActivity extends WebsocketActivity {
         super.onResume();
 
         if (WebSocketSingleton.getInstance().isConnected())
-            claimDisconnectionAlert();
+            WebSocketHandler.claimDisconnectionAlert(this);
         WebSocketSingleton.getInstance().sendMessage("DISCONNECT");
     }
 }

@@ -1,6 +1,5 @@
 package com.example.conectaplus.play_game;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,14 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.conectaplus.InitialActivity;
 import com.example.conectaplus.R;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.Jugador;
+import com.example.conectaplus.websocket.WebSocketHandler;
 import com.example.conectaplus.websocket.WebSocketSingleton;
 
 
-public class PlayMultiplayerActivity extends WebsocketPlayActivity {
+public class PlayMultiplayerActivity extends PlayBaseActivity {
 
     private LinearLayout turnLayout;
     private ChatManager chatManager;
@@ -31,7 +30,7 @@ public class PlayMultiplayerActivity extends WebsocketPlayActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_play_multiplayer);
-        claimDisconnectionAlert();
+        WebSocketHandler.claimDisconnectionAlert(this);
         super.onCreate(savedInstanceState);
 
         chatManager = new ChatManager(this);

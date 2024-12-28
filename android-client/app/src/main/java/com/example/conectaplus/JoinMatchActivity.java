@@ -6,13 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.conectaplus.play_game.PlayMultiplayerActivity;
 import com.example.conectaplus.websocket.WebSocketSingleton;
-import com.example.conectaplus.websocket.WebsocketActivity;
+import com.example.conectaplus.websocket.WebSocketActivity;
 
-public class JoinMatchActivity extends WebsocketActivity {
+public class JoinMatchActivity extends WebSocketActivity {
 
     private EditText roomCodeInput;
     private Button acceptButton;
@@ -21,7 +19,6 @@ public class JoinMatchActivity extends WebsocketActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        claimDisconnectionAlert();
         setContentView(R.layout.activity_join_match);
 
         roomCodeInput = findViewById(R.id.match_code_input);
