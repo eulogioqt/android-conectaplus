@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.websocket.ConnectionCallback;
 import com.example.conectaplus.websocket.WebSocketSingleton;
 
 public class MultiplayerActivity extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private void connectWebSocket() {
         WebSocketSingleton webSocketSingleton = WebSocketSingleton.getInstance();
 
-        webSocketSingleton.connect(new WebSocketSingleton.Callback() {
+        webSocketSingleton.connect(new ConnectionCallback() {
             @Override
             public void onSuccess() {
                 runOnUiThread(MultiplayerActivity.this::hideProgressBar);

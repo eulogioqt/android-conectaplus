@@ -6,6 +6,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.play_game.PlayAIActivity;
+import com.example.conectaplus.websocket.WebSocketSingleton;
+
 public class InitialActivity extends AppCompatActivity {
 
     private Button iaPlayButton;
@@ -20,6 +23,7 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WebSocketSingleton.getInstance().close();
 
         setContentView(R.layout.activity_initial);
 
@@ -62,5 +66,12 @@ public class InitialActivity extends AppCompatActivity {
             finish();
             System.exit(0);
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        WebSocketSingleton.getInstance().close();
     }
 }

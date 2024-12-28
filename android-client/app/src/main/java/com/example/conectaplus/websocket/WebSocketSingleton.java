@@ -25,7 +25,7 @@ public class WebSocketSingleton {
         return instance;
     }
 
-    public void connect(Callback callback) {
+    public void connect(ConnectionCallback callback) {
         if (isConnected) {
             Log.d(TAG, "Ya está conectado");
             if (callback != null) callback.onSuccess();
@@ -90,20 +90,7 @@ public class WebSocketSingleton {
         }
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
     public void setOnMessageListener(MessageListener listener) {
         this.messageListener = listener;
-    }
-
-    public interface Callback {
-        void onSuccess();
-        void onFailure(Throwable t);
-    }
-
-    public interface MessageListener {
-        void onMessage(String message);
     }
 }

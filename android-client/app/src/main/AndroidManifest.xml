@@ -35,10 +35,10 @@
             android:name=".MultiplayerActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayAIActivity"
+            android:name=".play_game.PlayAIActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayMultiplayerActivity"
+            android:name=".play_game.PlayMultiplayerActivity"
             android:exported="false" />
         <activity
             android:name=".InitialActivity"
