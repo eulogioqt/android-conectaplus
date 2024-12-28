@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.example.conectaplus.utils.LocaleHelper;
 
@@ -25,28 +26,32 @@ public class OptionsActivity extends AppCompatActivity {
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //0 es, 1 en, 2 ar
-                String selectedLanguage;
+                String selectedLanguage = "en";
+                String message = "Language changed to English";
+
                 switch (position) {
                     case 0:
                         selectedLanguage = "es";
+                        message = "Idioma cambiado a Español";
                         break;
                     case 1:
-                        selectedLanguage = "en";
                         break;
                     case 2:
                         selectedLanguage = "ar";
+                        message = "العرالعرعرية";
                         break;
                     default:
-                        selectedLanguage = "en";
+                        break;
                 }
 
                 if (!selectedLanguage.equals(LocaleHelper.getCurrentLanguage(OptionsActivity.this))) {
                     LocaleHelper.setLocale(OptionsActivity.this, selectedLanguage);
 
                     Intent intent = new Intent(OptionsActivity.this, InitialActivity.class);
+                    intent.putExtra("SNACKBAR", message);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+
                     finish();
                 }
             }
@@ -60,7 +65,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void setSpinnerSelection(Spinner spinner) {
         String currentLanguage = LocaleHelper.getCurrentLanguage(this);
-        int position = "es".equals(currentLanguage) ? 0 : 1;
+        int position = "es".equals(currentLanguage) ? 0 : ("ar".equals(currentLanguage) ? 2 : 1);
         spinner.setSelection(position);
     }
 }

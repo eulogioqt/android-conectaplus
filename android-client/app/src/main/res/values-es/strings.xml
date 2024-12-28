@@ -68,5 +68,15 @@
     <string name="creator1_link">Perfil de Github</string>
     <string name="creator2_name">Creador 2</string>
     <string name="creator2_link">Perfil de Github</string>
+    <string name="win">Victoria</string>
+    <string name="loss">Derrota</string>
+    <string name="draw">Empate</string>
+    <string name="singleplayer">Un jugador</string>
+    <string name="multiplayer">Multijugador</string>
 
+    <string name="history_item_type">Tipo de Juego</string>
+    <string name="no_results_message">No hay resultados para mostrar.</string>
+    <string name="clear_history_title">Borrar Historial</string>
+    <string name="clear_history_message">¿Estás seguro de que deseas borrar todo el historial de partidas?</string>
+    <string name="clear_history_success">Historial borrado con éxito</string>
 </resources>

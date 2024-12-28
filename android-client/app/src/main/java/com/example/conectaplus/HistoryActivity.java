@@ -3,38 +3,46 @@ package com.example.conectaplus;
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.conectaplus.database.GameDatabaseHelper;
+import com.example.conectaplus.database.GameContract;
+import com.example.conectaplus.database.GameDatabase;
+import com.example.conectaplus.database.GameDbHelper;
+import com.example.conectaplus.database.SingletonMap;
+import com.example.conectaplus.database.DatabaseValues; // Importar la clase DatabaseValues
+import com.google.android.material.snackbar.Snackbar;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private Cursor cursor;
-    private GameDatabaseHelper dbHelper;
+    private GameDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        initGameDatabase();
+
         try {
             ListView historyListView = findViewById(R.id.history_list_view);
-            dbHelper = new GameDatabaseHelper(this);
 
-            cursor = dbHelper.getAllResults();
-
+            cursor = db.getAllResults();
             if (cursor == null || cursor.getCount() == 0) {
-                Toast.makeText(this, "No hay resultados para mostrar.", Toast.LENGTH_SHORT).show();
-                return; // Salimos si no hay datos.
+                Toast.makeText(this, getString(R.string.no_results_message), Toast.LENGTH_SHORT).show();
+                return;
             }
 
-            String[] fromColumns = {"result", "timestamp"};
-            int[] toViews = {R.id.result_text, R.id.timestamp_text};
+            String[] fromColumns = {GameContract.GameEntry.COLUMN_NAME_RESULT, GameContract.GameEntry.COLUMN_NAME_TIMESTAMP, GameContract.GameEntry.COLUMN_NAME_TYPE};
+            int[] toViews = {R.id.result_text, R.id.timestamp_text, R.id.type_text};
 
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(
                     this,
@@ -43,28 +51,49 @@ public class HistoryActivity extends AppCompatActivity {
                     fromColumns,
                     toViews,
                     0
-            );
+            ) {
+                @Override
+                public void bindView(View view, android.content.Context context, Cursor cursor) {
+                    super.bindView(view, context, cursor);
+
+                    int resultColumnIndex = cursor.getColumnIndex(GameContract.GameEntry.COLUMN_NAME_RESULT);
+                    int typeColumnIndex = cursor.getColumnIndex(GameContract.GameEntry.COLUMN_NAME_TYPE);
+
+                    if (resultColumnIndex != -1 && typeColumnIndex != -1) {
+                        int result = cursor.getInt(resultColumnIndex);
+                        int type = cursor.getInt(typeColumnIndex);
+
+                        String transformedResult = DatabaseValues.getString(GameContract.GameEntry.COLUMN_NAME_RESULT, result);
+                        String transformedType =  DatabaseValues.getString(GameContract.GameEntry.COLUMN_NAME_TYPE, type);
+
+                        ((TextView) view.findViewById(R.id.result_text)).setText(transformedResult);
+                        ((TextView) view.findViewById(R.id.type_text)).setText(transformedType);
+                    } else {
+                        Log.e("HistoryActivity", "Columnas no encontradas");
+                    }
+                }
+            };
 
             historyListView.setAdapter(adapter);
 
         } catch (Exception e) {
             showErrorDialog(e);
         }
+
         Button clearHistoryButton = findViewById(R.id.clear_history_button);
         clearHistoryButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
-                    .setTitle("Borrar Historial")
-                    .setMessage("¿Estás seguro de que deseas borrar todo el historial de partidas?")
+                    .setTitle(getString(R.string.clear_history_title))
+                    .setMessage(getString(R.string.clear_history_message))
                     .setPositiveButton("Sí", (dialog, which) -> {
-                        dbHelper.getWritableDatabase().delete("game_history", null, null);
-                        cursor = dbHelper.getAllResults();
+                        deleteHistory();
+                        cursor = db.getAllResults();
                         ((SimpleCursorAdapter) ((ListView) findViewById(R.id.history_list_view)).getAdapter()).changeCursor(cursor);
-                        Toast.makeText(this, "Historial borrado con éxito.", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), getString(R.string.clear_history_success), Snackbar.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
         });
-
     }
 
     @Override
@@ -73,16 +102,8 @@ public class HistoryActivity extends AppCompatActivity {
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
-        if (dbHelper != null) {
-            dbHelper.close();
-        }
     }
 
-    /**
-     * Muestra un cuadro de diálogo con el mensaje del error.
-     *
-     * @param e La excepción capturada.
-     */
     private void showErrorDialog(Exception e) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Error")
@@ -95,17 +116,24 @@ public class HistoryActivity extends AppCompatActivity {
                 .show();
     }
 
-    /**
-     * Muestra detalles más profundos del error en un cuadro de diálogo.
-     *
-     * @param e La excepción capturada.
-     */
     private void showDetailedErrorDialog(Exception e) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Detalles del Error")
-                .setMessage(e.toString()) // Muestra el stack trace completo.
+                .setMessage(e.toString())
                 .setPositiveButton("Cerrar", null)
                 .setCancelable(false)
                 .show();
+    }
+
+    private void initGameDatabase() {
+        db = (GameDatabase) SingletonMap.getInstance().get(GameDbHelper.DATABASE_NAME);
+        if (db == null) {
+            db = new GameDatabase(getApplicationContext());
+            SingletonMap.getInstance().put(GameDbHelper.DATABASE_NAME, db);
+        }
+    }
+
+    private void deleteHistory() {
+        db.deleteAllResults();
     }
 }

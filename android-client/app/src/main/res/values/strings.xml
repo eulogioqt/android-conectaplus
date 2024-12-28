@@ -78,5 +78,16 @@
     <string name="creator1_link">GitHub Profile</string>
     <string name="creator2_name">Creator 2</string>
     <string name="creator2_link">GitHub Profile</string>
+    <string name="win">Win</string>
+    <string name="loss">Loss</string>
+    <string name="draw">Draw</string>
+    <string name="singleplayer">Single Player</string>
+    <string name="multiplayer">Multi Player</string>
+
+    <string name="history_item_type">Game Type</string>
+    <string name="no_results_message">No results to show</string>
+    <string name="clear_history_title">Delete History</string>
+    <string name="clear_history_message">Are you sure you want to delete the entire game history?</string>
+    <string name="clear_history_success">HIstory succesfully deleted</string>
 
 </resources>

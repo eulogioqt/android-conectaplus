@@ -2,9 +2,14 @@ package com.example.conectaplus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.conectaplus.database.DatabaseValues;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.example.conectaplus.play_game.PlayAIActivity;
 import com.example.conectaplus.websocket.WebSocketSingleton;
@@ -23,8 +28,7 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WebSocketSingleton.getInstance().close();
-
+        DatabaseValues.initialize(getBaseContext());
         setContentView(R.layout.activity_initial);
 
         iaPlayButton = findViewById(R.id.btn_play_ai);
@@ -33,9 +37,11 @@ public class InitialActivity extends AppCompatActivity {
         optionsButton = findViewById(R.id.btn_options);
         historyButton = findViewById(R.id.btn_history);
         aboutButton = findViewById(R.id.btn_about);
-
-
         exitButton = findViewById(R.id.btn_exit);
+
+        String snackbarMessage = getIntent().getStringExtra("SNACKBAR");
+        if (snackbarMessage != null && !snackbarMessage.isEmpty())
+            Snackbar.make(findViewById(android.R.id.content), snackbarMessage, Snackbar.LENGTH_SHORT).show();
 
         iaPlayButton.setOnClickListener(view -> {
             Intent intent = new Intent(InitialActivity.this, PlayAIActivity.class);
@@ -67,7 +73,6 @@ public class InitialActivity extends AppCompatActivity {
             System.exit(0);
         });
     }
-
 
     @Override
     protected void onResume() {

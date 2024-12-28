@@ -113,31 +113,37 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
     }
 
     @Override
-    protected int jugarPartida(Jugador<ConectaK> ignore) {
+    protected void jugarPartida(Jugador<ConectaK> ignore) {
         while (!isGameOver()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ignored) {}
         }
-        return getGameResult();
+    }
+
+    @Override
+    protected int getGameResult() {
+        int result = 0;
+        if (conectaK.ganaActual()) {
+            result = conectaK.turno1() ? 1 : -1;
+        } else if (conectaK.ganaOtro()) {
+            result = conectaK.turno1() ? -1 : 1;
+        }
+
+        if ((result == 1 && turnoLocal == 1) || (result == -1 && turnoLocal != 1)) {
+            return 1;
+        } else if (result != 0) {
+            return -1;
+        }
+        return 0;
     }
 
     @Override
     protected void showGameOverDialog(int result) {
-        String message;
-
-        if ((result == 1 && turnoLocal == 1) || (result == -1 && turnoLocal != 1)) {
-            message = getString(R.string.ad_game_finished_win_desc);
-        } else if (result == 1 || result == -1) {
-            message = getString(R.string.ad_game_finished_lose_desc);
-        } else {
-            message = getString(R.string.ad_game_finished_draw_desc);
-        }
-
         if (turnoLocal == 1)
             WebSocketSingleton.getInstance().sendMessage("END");
 
-        super.showGameOverDialog(message);
+        super.showGameOverDialog(result, 2);
     }
 
     @Override

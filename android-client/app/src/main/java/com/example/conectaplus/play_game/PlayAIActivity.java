@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.conectaplus.R;
+import com.example.conectaplus.database.GameDatabase;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.JugadorAlfaBeta;
-import com.example.conectaplus.database.GameDatabaseHelper;
 import com.example.conectaplus.game_conectak.conectak.EvaluadorCK;
 import com.example.conectaplus.game_conectak.jugadores.Evaluador;
 import com.example.conectaplus.game_conectak.jugadores.Jugador;
@@ -47,9 +47,19 @@ public class PlayAIActivity extends PlayBaseActivity {
     }
 
     @Override
-    protected int jugarPartida(Jugador<ConectaK> jugadorIA) {
+    protected int getGameResult() {
+        if (conectaK.ganaActual()) {
+            return conectaK.turno1() ? 1 : -1;
+        } else if (conectaK.ganaOtro()) {
+            return conectaK.turno1() ? -1 : 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    protected void jugarPartida(Jugador<ConectaK> jugadorIA) {
         while (!isGameOver()) {
-            Log.d("Se supone q no game over", "Se supone q no game over");
             if (conectaK.turno1()) {
                 isHumanTurn = true;
                 while (isHumanTurn) {
@@ -62,28 +72,11 @@ public class PlayAIActivity extends PlayBaseActivity {
                 handleAITurn(jugadorIA);
             }
         }
-        Log.d("Ahora si", "ahora si");
-        return getGameResult();
     }
+
     @Override
     protected void showGameOverDialog(int result) {
-        GameDatabaseHelper dbHelper = new GameDatabaseHelper(this);
-        String message;
-
-        if (result == 1) {
-            message = getString(R.string.ad_game_finished_win_desc);
-            dbHelper.addResult("win");
-        } else if (result == -1) {
-            message = getString(R.string.ad_game_finished_lose_desc);
-            dbHelper.addResult("loss");
-        } else {
-            message = getString(R.string.ad_game_finished_draw_desc);
-            dbHelper.addResult("draw");
-        }
-
-        dbHelper.close();
-
-        super.showGameOverDialog(message);
+        super.showGameOverDialog(result, 1);
     }
 
     @Override

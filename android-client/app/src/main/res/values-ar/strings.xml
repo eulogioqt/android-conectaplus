@@ -78,5 +78,15 @@
     <string name="creator1_link">الملف الشخصي على جيثب</string>
     <string name="creator2_name">المبدع 2</string>
     <string name="creator2_link">الملف الشخصي على جيثب</string>
+    <string name="win">-</string>
+    <string name="loss">-</string>
+    <string name="draw">-</string>
+    <string name="singleplayer">-</string>
+    <string name="multiplayer">-</string>
+    <string name="history_item_type">-</string>
+    <string name="no_results_message">-</string>
+    <string name="clear_history_title">-</string>
+    <string name="clear_history_message">-</string>
+    <string name="clear_history_success">-</string>
 
 </resources>

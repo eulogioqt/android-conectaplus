@@ -16,10 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.conectaplus.InitialActivity;
 import com.example.conectaplus.R;
+import com.example.conectaplus.database.GameDatabase;
+import com.example.conectaplus.database.GameDbHelper;
+import com.example.conectaplus.database.SingletonMap;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.Jugador;
 
 public abstract class PlayBaseActivity extends AppCompatActivity {
+
+    protected GameDatabase gameDatabase;
 
     protected static int ROWS = 5;
     protected static int COLS = 6;
@@ -46,6 +51,7 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
 
         initializeBoard();
         initializeColumnButtons();
+        initGameDatabase();
     }
 
     protected void initializeBoard() {
@@ -131,16 +137,6 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
         return conectaK.ganaActual() || conectaK.ganaOtro() || conectaK.agotado();
     }
 
-    protected int getGameResult() {
-        if (conectaK.ganaActual()) {
-            return conectaK.turno1() ? 1 : -1;
-        } else if (conectaK.ganaOtro()) {
-            return conectaK.turno1() ? -1 : 1;
-        } else {
-            return 0;
-        }
-    }
-
     private void showMessage(String message) {
         runOnUiThread(() -> {
             if (currentToast != null) {
@@ -151,8 +147,19 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
         });
     }
 
-    protected void showGameOverDialog(String message) {
+    protected void showGameOverDialog(int result, int players) {
         runOnUiThread(() -> {
+            String message;
+
+            if (result == 1)
+                message = getString(R.string.ad_game_finished_win_desc);
+            else if (result == -1)
+                message = getString(R.string.ad_game_finished_lose_desc);
+            else
+                message = getString(R.string.ad_game_finished_draw_desc);
+
+            gameDatabase.addResult(result, players);
+
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.ad_game_finished))
                     .setMessage(message)
@@ -169,13 +176,22 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
 
     protected void startMatch() {
         new Thread(() -> {
-            int resultado = jugarPartida(getOtherPlayer());
-            runOnUiThread(() -> showGameOverDialog(resultado));
+            jugarPartida(getOtherPlayer());
+            runOnUiThread(() -> showGameOverDialog(getGameResult()));
         }).start();
     }
 
+    private void initGameDatabase() {
+        gameDatabase = (GameDatabase) SingletonMap.getInstance().get(GameDbHelper.DATABASE_NAME);
+        if(gameDatabase == null) {
+            gameDatabase = new GameDatabase(getApplicationContext());
+            SingletonMap.getInstance().put(GameDbHelper.DATABASE_NAME, gameDatabase);
+        }
+    }
+
+    protected abstract int getGameResult();
     protected abstract Jugador<ConectaK> getOtherPlayer();
-    protected abstract int jugarPartida(Jugador<ConectaK> jugadorIA);
+    protected abstract void jugarPartida(Jugador<ConectaK> jugadorIA);
     protected abstract void showGameOverDialog(int result);
     protected abstract boolean isLocalTurn();
     protected abstract boolean isMainPlayer();
