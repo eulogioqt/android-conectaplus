@@ -2,13 +2,11 @@ package com.example.conectaplus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.conectaplus.database.DatabaseValues;
+import com.example.conectaplus.utils.database.DatabaseValues;
 import com.google.android.material.snackbar.Snackbar;
 
 import com.example.conectaplus.play_game.PlayAIActivity;

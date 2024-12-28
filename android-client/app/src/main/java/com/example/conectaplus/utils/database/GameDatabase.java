@@ -1,4 +1,4 @@
-package com.example.conectaplus.database;
+package com.example.conectaplus.utils.database;
 
 import android.content.ContentValues;
 import android.content.Context;

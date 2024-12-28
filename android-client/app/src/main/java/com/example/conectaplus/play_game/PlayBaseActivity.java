@@ -16,9 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.conectaplus.InitialActivity;
 import com.example.conectaplus.R;
-import com.example.conectaplus.database.GameDatabase;
-import com.example.conectaplus.database.GameDbHelper;
-import com.example.conectaplus.database.SingletonMap;
+import com.example.conectaplus.utils.database.GameDatabase;
+import com.example.conectaplus.utils.database.GameDbHelper;
+import com.example.conectaplus.utils.database.SingletonMap;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.Jugador;
 

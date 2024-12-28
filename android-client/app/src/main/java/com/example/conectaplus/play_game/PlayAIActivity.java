@@ -1,10 +1,8 @@
 package com.example.conectaplus.play_game;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.conectaplus.R;
-import com.example.conectaplus.database.GameDatabase;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.JugadorAlfaBeta;
 import com.example.conectaplus.game_conectak.conectak.EvaluadorCK;

@@ -1,7 +1,6 @@
-package com.example.conectaplus.database;
+package com.example.conectaplus.utils.database;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.conectaplus.R;
 

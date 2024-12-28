@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.conectaplus.database.GameContract;
-import com.example.conectaplus.database.GameDatabase;
-import com.example.conectaplus.database.GameDbHelper;
-import com.example.conectaplus.database.SingletonMap;
-import com.example.conectaplus.database.DatabaseValues; // Importar la clase DatabaseValues
+import com.example.conectaplus.utils.database.GameContract;
+import com.example.conectaplus.utils.database.GameDatabase;
+import com.example.conectaplus.utils.database.GameDbHelper;
+import com.example.conectaplus.utils.database.SingletonMap;
+import com.example.conectaplus.utils.database.DatabaseValues; // Importar la clase DatabaseValues
 import com.google.android.material.snackbar.Snackbar;
 
 public class HistoryActivity extends AppCompatActivity {
