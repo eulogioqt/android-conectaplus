@@ -20,10 +20,7 @@ import com.example.conectaplus.websocket.WebSocketSingleton;
 
 public class PlayMultiplayerActivity extends PlayBaseActivity {
 
-    private LinearLayout turnLayout;
     private ChatManager chatManager;
-
-    private TextView turnoText;
     private TextView textRoom;
     private int turnoLocal;
 
@@ -38,14 +35,11 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
         Button chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(v -> chatManager.openChatDialog());
 
-        turnLayout = findViewById(R.id.turn_layout);
         textRoom = findViewById(R.id.match_text);
 
         String matchCode = getIntent().getStringExtra("MATCH_CODE");
         turnoLocal = Integer.parseInt(getIntent().getStringExtra("TURNO_LOCAL"));
         textRoom.setText(String.format("%s %s", getString(R.string.match_string), matchCode != null ? matchCode : "?"));
-
-        initializeTurnLayout();
 
         WebSocketSingleton.getInstance().setOnMessageListener(message -> {
             if (message.startsWith("CHAT"))
@@ -91,44 +85,12 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
         });
     }
 
-    private void initializeTurnLayout() {
-        View ficha = new View(this);
-        GradientDrawable circle = new GradientDrawable();
-        circle.setShape(GradientDrawable.OVAL);
-        circle.setColor((turnoLocal == 1 && isLocalTurn()) || (turnoLocal != 1 && !isLocalTurn()) ? Color.RED : Color.YELLOW);
-        circle.setStroke(4, Color.BLACK);
-        ficha.setBackground(circle);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CELL_SIZE, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.width = (int) (CELL_SIZE * 0.75);
-        params.height = (int) (CELL_SIZE * 0.75);
-        ficha.setLayoutParams(params);
-
-        turnLayout.addView(ficha);
-
-        turnoText = new TextView(this);
-        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
-        turnoText.setTextSize(24);
-        turnoText.setPadding(24, 0, 0, 0);
-        turnLayout.setPadding(0, 0, 0, 32);
-
-        turnLayout.addView(turnoText);
-    }
-    private void updateTurnDisplay() {
-        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
-
-        GradientDrawable circle = (GradientDrawable) turnLayout.getChildAt(0).getBackground();
-        circle.setColor((turnoLocal == 1 && isLocalTurn()) || (turnoLocal != 1 && !isLocalTurn()) ? Color.RED : Color.YELLOW);
-    }
-
     @Override
     protected void dropFicha(int colNum, boolean isMainTurn) {
         super.dropFicha(colNum, isMainTurn);
 
         if (isLocalTurn())
             WebSocketSingleton.getInstance().sendMessage("MOVE " + (colNum + 1));
-
-        runOnUiThread(this::updateTurnDisplay);
     }
 
     @Override

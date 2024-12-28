@@ -92,5 +92,19 @@
     <string name="ad_player_disconnected_desc">-</string>
     <string name="ad_server_disconnected">-</string>
     <string name="ad_server_disconnected_desc">-</string>
+    <string name="game_configuration_title">-</string>
+    <string name="difficulty_easy">-</string>
+    <string name="difficulty_medium">-</string>
+    <string name="difficulty_hard">-</string>
+    <string name="input_rows_hint">-</string>
+    <string name="input_columns_hint">-</string>
+    <string name="input_win_hint">-</string>
+    <string name="btn_continue">-</string>
+    <string name="error_invalid_input">-</string>
+    <string name="error_invalid_win_condition">-</string>
+    <string name="difficulty_label">-</string>
+    <string name="label_rows">-</string>
+    <string name="label_columns">-</string>
+    <string name="label_win">-</string>
 
 </resources>

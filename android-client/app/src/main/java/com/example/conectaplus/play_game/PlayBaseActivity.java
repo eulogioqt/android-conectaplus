@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +34,8 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
     protected static int CELL_SIZE = 0;
 
     protected ConectaK conectaK;
+    private LinearLayout turnLayout;
+    private TextView turnoText;
     protected GridLayout boardLayout;
     protected LinearLayout buttonLayout;
     private Toast currentToast;
@@ -46,12 +50,44 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
 
         conectaK = new ConectaK(ROWS, COLS, WIN);
 
+        turnLayout = findViewById(R.id.turn_layout);
         boardLayout = findViewById(R.id.board_layout);
         buttonLayout = findViewById(R.id.button_layout);
 
         initializeBoard();
         initializeColumnButtons();
+        initializeTurnLayout();
         initGameDatabase();
+    }
+
+    private void initializeTurnLayout() {
+        View ficha = new View(this);
+        GradientDrawable circle = new GradientDrawable();
+        circle.setShape(GradientDrawable.OVAL);
+        circle.setColor((isMainPlayer() && isLocalTurn()) || (!isMainPlayer() && !isLocalTurn()) ? Color.RED : Color.YELLOW);
+        circle.setStroke(4, Color.BLACK);
+        ficha.setBackground(circle);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CELL_SIZE, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.width = (int) (CELL_SIZE * 0.75);
+        params.height = (int) (CELL_SIZE * 0.75);
+        ficha.setLayoutParams(params);
+
+        turnLayout.addView(ficha);
+
+        turnoText = new TextView(this);
+        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
+        turnoText.setTextSize(24);
+        turnoText.setPadding(24, 0, 0, 0);
+        turnLayout.setPadding(0, 0, 0, 32);
+
+        turnLayout.addView(turnoText);
+    }
+    protected void updateTurnDisplay() {
+        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
+
+        GradientDrawable circle = (GradientDrawable) turnLayout.getChildAt(0).getBackground();
+        circle.setColor((isMainPlayer() && isLocalTurn()) || (!isMainPlayer() && !isLocalTurn()) ? Color.RED : Color.YELLOW);
     }
 
     protected void initializeBoard() {
@@ -131,6 +167,7 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
 
         conectaK = conectaK.mueveHumano(colNum);
         paintCell(row, colNum, isMainTurn);
+        runOnUiThread(this::updateTurnDisplay);
     }
 
     protected boolean isGameOver() {

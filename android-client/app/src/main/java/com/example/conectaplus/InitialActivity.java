@@ -42,7 +42,7 @@ public class InitialActivity extends AppCompatActivity {
             Snackbar.make(findViewById(android.R.id.content), snackbarMessage, Snackbar.LENGTH_SHORT).show();
 
         iaPlayButton.setOnClickListener(view -> {
-            Intent intent = new Intent(InitialActivity.this, PlayAIActivity.class);
+            Intent intent = new Intent(InitialActivity.this, GameConfigurationActivity.class);
             startActivity(intent);
         });
 

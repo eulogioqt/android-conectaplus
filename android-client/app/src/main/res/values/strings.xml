@@ -93,5 +93,19 @@
     <string name="ad_player_disconnected_desc">The other player has disconnected from the game</string>
     <string name="ad_server_disconnected">Disconnection</string>
     <string name="ad_server_disconnected_desc">Disconnected from the server</string>
+    <string name="game_configuration_title">Game configuration</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard (Can be slow with big boards)</string>
+    <string name="input_rows_hint">Rows</string>
+    <string name="input_columns_hint">Columns</string>
+    <string name="input_win_hint">Tiles to win)</string>
+    <string name="btn_continue">Continue</string>
+    <string name="error_invalid_input">Please, use valid values</string>
+    <string name="error_invalid_win_condition">You can not put more tiles to win than the size of the board</string>
+    <string name="difficulty_label">Dificulty</string>
+    <string name="label_rows">Number of rows [3, 8]</string>
+    <string name="label_columns">Number of columns [3, 8]</string>
+    <string name="label_win">Tiles to win (> 1)</string>
 
 </resources>

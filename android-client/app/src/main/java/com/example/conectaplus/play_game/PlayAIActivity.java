@@ -1,9 +1,11 @@
 package com.example.conectaplus.play_game;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.conectaplus.R;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
+import com.example.conectaplus.game_conectak.jugadores.JugadorAleatorio;
 import com.example.conectaplus.game_conectak.jugadores.JugadorAlfaBeta;
 import com.example.conectaplus.game_conectak.conectak.EvaluadorCK;
 import com.example.conectaplus.game_conectak.jugadores.Evaluador;
@@ -14,15 +16,30 @@ public class PlayAIActivity extends PlayBaseActivity {
     private Jugador<ConectaK> jugadorIA;
 
     private static int PROFUNDIDAD = 1;
-    private boolean isHumanTurn = false;
+    private boolean isHumanTurn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_play_ai);
-        super.onCreate(savedInstanceState);
 
-        Evaluador<ConectaK> evaluador = new EvaluadorCK();
-        jugadorIA = new JugadorAlfaBeta<>(evaluador, PROFUNDIDAD);
+        ROWS = Integer.parseInt(getIntent().getStringExtra("ROWS"));
+        COLS = Integer.parseInt(getIntent().getStringExtra("COLS"));
+        WIN = Integer.parseInt(getIntent().getStringExtra("WIN"));
+
+        int dificulty = Integer.parseInt(getIntent().getStringExtra("DIFICULTY"));
+
+        if (dificulty == 1) jugadorIA = new JugadorAleatorio<>();
+        else {
+            if (dificulty == 2) PROFUNDIDAD = WIN;
+            else PROFUNDIDAD = WIN * 2;
+
+            Evaluador<ConectaK> evaluador = new EvaluadorCK();
+            jugadorIA = new JugadorAlfaBeta<>(evaluador, PROFUNDIDAD);
+        }
+
+        Log.d("Profundidad", String.valueOf(PROFUNDIDAD));
+
+        super.onCreate(savedInstanceState);
 
         startMatch();
     }
@@ -31,6 +48,7 @@ public class PlayAIActivity extends PlayBaseActivity {
         conectaK = jugadorIA.mueve(conectaK);
         if (conectaK.getUltimoMov() != null) {
             paintCell(conectaK.getUltimoMov().f(), conectaK.getUltimoMov().c(), false);
+            runOnUiThread(this::updateTurnDisplay);
         }
 
         if (!isGameOver())
@@ -39,9 +57,8 @@ public class PlayAIActivity extends PlayBaseActivity {
 
     @Override
     protected void dropFicha(int colNum, boolean isMainTurn) {
-        super.dropFicha(colNum, isMainTurn);
-
         isHumanTurn = false;
+        super.dropFicha(colNum, isMainTurn);
     }
 
     @Override

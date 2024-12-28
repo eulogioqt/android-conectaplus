@@ -85,4 +85,19 @@
 
     <string name="ad_server_disconnected">Desconexión</string>
     <string name="ad_server_disconnected_desc">Ha sido desconectado del servidor</string>
+
+    <string name="game_configuration_title">Configuración de partida</string>
+    <string name="difficulty_label">Dificultad</string>
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_medium">Medio</string>
+    <string name="difficulty_hard">Difícil (Puede ser lento con tableros grandes)</string>
+    <string name="label_rows">Número de filas [3, 8]</string>
+    <string name="input_rows_hint">Introduce filas</string>
+    <string name="label_columns">Número de columnas [3, 8]</string>
+    <string name="input_columns_hint">Introduce columnas</string>
+    <string name="label_win">Fichas para ganar (> 1)</string>
+    <string name="input_win_hint">Introduce fichas para ganar</string>
+    <string name="btn_continue">Continuar</string>
+    <string name="error_invalid_input">Por favor, usa valores válidos</string>
+    <string name="error_invalid_win_condition">No puedes poner más fichas para ganar que el tamaño del tablero</string>
 </resources>
