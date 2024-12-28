@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.websocket.WebSocketSingleton;
+
 public class JoinMatchActivity extends AppCompatActivity {
 
     private EditText roomCodeInput;

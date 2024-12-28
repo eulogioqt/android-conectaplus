@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.conectaplus.game.conectak.ConectaK;
+import com.example.conectaplus.websocket.WebSocketSingleton;
 
 import java.util.ArrayList;
 import java.util.List;

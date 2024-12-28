@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.websocket.WebSocketSingleton;
+
 public class WaitingActivty extends AppCompatActivity {
 
     private TextView waitingText;

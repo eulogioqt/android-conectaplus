@@ -1,4 +1,4 @@
-package com.example.conectaplus;
+package com.example.conectaplus.websocket;
 
 import android.util.Log;
 import okhttp3.Request;
