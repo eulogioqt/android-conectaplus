@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.websocket.WebSocketSingleton;
+
 public class MultiplayerActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
