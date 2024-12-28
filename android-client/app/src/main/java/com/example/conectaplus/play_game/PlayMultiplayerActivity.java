@@ -1,5 +1,6 @@
 package com.example.conectaplus.play_game;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -9,13 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.conectaplus.InitialActivity;
 import com.example.conectaplus.R;
 import com.example.conectaplus.game_conectak.conectak.ConectaK;
 import com.example.conectaplus.game_conectak.jugadores.Jugador;
 import com.example.conectaplus.websocket.WebSocketSingleton;
 
 
-public class PlayMultiplayerActivity extends PlayBaseActivity {
+public class PlayMultiplayerActivity extends WebsocketPlayActivity {
 
     private LinearLayout turnLayout;
     private ChatManager chatManager;
@@ -27,6 +31,7 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_play_multiplayer);
+        claimDisconnectionAlert();
         super.onCreate(savedInstanceState);
 
         chatManager = new ChatManager(this);
@@ -48,6 +53,8 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
                 handleChatMessage(message);
             else if (message.startsWith("MOVE"))
                 handleMoveMessage(message);
+            else if (message.startsWith("DISCONNECT"))
+                handleDisconnectMessage();
         });
 
         startMatch();
@@ -70,6 +77,19 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
         } else {
             runOnUiThread(() -> Toast.makeText(this, getString(R.string.error_moving_other_player_not_his_turn), Toast.LENGTH_SHORT).show());
         }
+    }
+
+    private void handleDisconnectMessage() {
+        runOnUiThread(() -> {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.ad_player_disconnected))
+                    .setMessage(getString(R.string.ad_player_disconnected_desc))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.btn_accept), (dialog, which) -> {
+                        finish();
+                    })
+                    .show();
+        });
     }
 
     private void initializeTurnLayout() {

@@ -79,4 +79,10 @@
     <string name="clear_history_title">Borrar Historial</string>
     <string name="clear_history_message">¿Estás seguro de que deseas borrar todo el historial de partidas?</string>
     <string name="clear_history_success">Historial borrado con éxito</string>
+
+    <string name="ad_player_disconnected">Jugador desconectado</string>
+    <string name="ad_player_disconnected_desc">El otro jugador se ha desconectado de la partida</string>
+
+    <string name="ad_server_disconnected">Desconexión</string>
+    <string name="ad_server_disconnected_desc">Ha sido desconectado del servidor</string>
 </resources>

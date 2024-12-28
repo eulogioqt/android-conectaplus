@@ -1,6 +1,14 @@
 package com.example.conectaplus.websocket;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.conectaplus.InitialActivity;
+import com.example.conectaplus.R;
+
 import okhttp3.Request;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
@@ -12,6 +20,7 @@ public class WebSocketSingleton {
     private static WebSocketSingleton instance;
     private WebSocket webSocket;
     private static final String WS_URL = "ws://eulogioqt-raspberry.jumpingcrab.com:8765";
+    private ConnectionCallback callback;
     private boolean isConnected = false;
 
     private MessageListener messageListener;
@@ -25,7 +34,7 @@ public class WebSocketSingleton {
         return instance;
     }
 
-    public void connect(ConnectionCallback callback) {
+    public void connect() {
         if (isConnected) {
             Log.d(TAG, "Ya está conectado");
             if (callback != null) callback.onSuccess();
@@ -33,7 +42,7 @@ public class WebSocketSingleton {
         }
 
         // "ws://192.168.100.2:8765"
-        Request request = new Request.Builder().url(WS_URL).build();
+        Request request = new Request.Builder().url("ws://192.168.100.2:8765").build();
 
         WebSocketListener listener = new WebSocketListener() {
             @Override
@@ -57,14 +66,22 @@ public class WebSocketSingleton {
             @Override
             public void onFailure(WebSocket webSocket, Throwable t, Response response) {
                 super.onFailure(webSocket, t, response);
-                isConnected = false;
                 Log.e(TAG, "Error en WebSocket: " + t.getMessage());
-                if (callback != null) callback.onFailure(t);
+
+                if (callback != null) {
+                    if (isConnected)
+                        callback.onDisconnect();
+                    else
+                        callback.onFailure(t);
+                }
+
+                isConnected = false;
             }
 
             @Override
             public void onClosing(WebSocket webSocket, int code, String reason) {
                 super.onClosing(webSocket, code, reason);
+                if (callback != null) callback.onDisconnect();
                 isConnected = false;
                 Log.d(TAG, "WebSocket cerrando: " + reason);
             }
@@ -90,6 +107,8 @@ public class WebSocketSingleton {
         }
     }
 
+    public boolean isConnected() {return isConnected;}
+    public void setConnectionCallback(ConnectionCallback callback) {this.callback = callback;}
     public void setOnMessageListener(MessageListener listener) {
         this.messageListener = listener;
     }

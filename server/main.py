@@ -36,6 +36,10 @@ async def process_message(websocket, m):
             await send_message(other_client, MESSAGES.CHAT, msg)
     
     elif is_message_type(m, MESSAGES.CREATE):
+        match_code = get_match_code(client_address) # Si tenia otra sala, se le echa de esa
+        if match_code is not None:
+            matches.pop(match_code)
+
         code = None
         while code is None or code in matches.keys():
             code = str(random.randint(1000, 9999))
@@ -46,6 +50,10 @@ async def process_message(websocket, m):
         await send_message(websocket, MESSAGES.CREATE, code)
 
     elif is_message_type(m, MESSAGES.JOIN):
+        match_code = get_match_code(client_address) # Si tenia otra sala, se le echa de esa
+        if match_code is not None:
+            matches.pop(match_code)
+
         code = m[(len(MESSAGES.JOIN) + 1):]
 
         if code in matches.keys() and client_address != matches.get(code).get("j1") and matches.get(code).get("j2") is None:
@@ -71,13 +79,13 @@ async def process_message(websocket, m):
             print(f"[{client_address}] Suelta ficha en {x} en la sala {match_code}")
             await send_message(other_client, MESSAGES.MOVE, x)
 
+    elif is_message_type(m, MESSAGES.DISCONNECT):
+        await handle_disconnect(client_address)
+                
     elif is_message_type(m, MESSAGES.END):
         match_code = get_match_code(client_address)
         if match_code is not None:
             matches.pop(match_code)
-
-    else:
-        await send_message(websocket, MESSAGES.CHAT, "[Server] ES EL FIN DEL MUNDO NO HAS MANDADO UN CHAT")
     
     print(matches)
 
@@ -101,6 +109,16 @@ def get_socket_addr(websocket):
 def is_message_type(message, type):
     return message.startswith(type)
 
+async def handle_disconnect(client_address):
+    match_code = get_match_code(client_address)
+    if match_code is not None:
+        other_player = get_other_player(client_address, match_code)
+        if other_player is not None:
+            other_client = connected_clients.get(other_player)
+            await send_message(other_client, MESSAGES.DISCONNECT)
+        
+        matches.pop(match_code)
+
 async def send_message(websocket, type, message=""):
     try:
         await websocket.send(type + " " + message)
@@ -110,6 +128,7 @@ async def send_message(websocket, type, message=""):
 async def handler(websocket, path):
     client_address = get_socket_addr(websocket)
     connected_clients[client_address] = websocket
+
     print(f">> {client_address} ha entrado ({len(connected_clients.keys())} conexiones).")
     
     try:
@@ -117,7 +136,10 @@ async def handler(websocket, path):
             await process_message(websocket, m)
     except websockets.exceptions.ConnectionClosed as e:
         print(f"Conexión cerrada con {client_address}: {e}")
+
     finally:
+        await handle_disconnect(client_address)
+        
         connected_clients.pop(client_address)
         print(f">> {client_address} ha salido ({len(connected_clients.keys())} conexiones).")
 

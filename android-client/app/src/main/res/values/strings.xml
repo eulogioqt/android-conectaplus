@@ -89,5 +89,9 @@
     <string name="clear_history_title">Delete History</string>
     <string name="clear_history_message">Are you sure you want to delete the entire game history?</string>
     <string name="clear_history_success">HIstory succesfully deleted</string>
+    <string name="ad_player_disconnected">Player disconnected</string>
+    <string name="ad_player_disconnected_desc">The other player has disconnected from the game</string>
+    <string name="ad_server_disconnected">Disconnection</string>
+    <string name="ad_server_disconnected_desc">Disconnected from the server</string>
 
 </resources>

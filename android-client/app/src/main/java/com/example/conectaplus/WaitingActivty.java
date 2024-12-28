@@ -9,8 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.conectaplus.play_game.PlayMultiplayerActivity;
 import com.example.conectaplus.websocket.WebSocketSingleton;
+import com.example.conectaplus.websocket.WebsocketActivity;
 
-public class WaitingActivty extends AppCompatActivity {
+public class WaitingActivty extends WebsocketActivity {
 
     private TextView waitingText;
     private TextView roomCodeText;
@@ -18,6 +19,7 @@ public class WaitingActivty extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        claimDisconnectionAlert();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_waiting_activty);
 

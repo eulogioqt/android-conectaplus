@@ -88,5 +88,9 @@
     <string name="clear_history_title">-</string>
     <string name="clear_history_message">-</string>
     <string name="clear_history_success">-</string>
+    <string name="ad_player_disconnected">-</string>
+    <string name="ad_player_disconnected_desc">-</string>
+    <string name="ad_server_disconnected">-</string>
+    <string name="ad_server_disconnected_desc">-</string>
 
 </resources>

@@ -6,12 +6,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.conectaplus.websocket.WebsocketActivity;
 import com.example.conectaplus.websocket.ConnectionCallback;
 import com.example.conectaplus.websocket.WebSocketSingleton;
 
-public class MultiplayerActivity extends AppCompatActivity {
+public class MultiplayerActivity extends WebsocketActivity {
 
     private ProgressBar progressBar;
     private Button createRoomButton;
@@ -20,15 +20,18 @@ public class MultiplayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        claimDisconnectionAlert();
         setContentView(R.layout.activity_multiplayer);
 
         progressBar = findViewById(R.id.progress_bar);
         createRoomButton = findViewById(R.id.create_match_button);
         joinRoomButton = findViewById(R.id.join_match_button);
 
-        showProgressBar();
-        connectWebSocket();
-
+        if (!WebSocketSingleton.getInstance().isConnected()) {
+            showProgressBar();
+            connectWebSocket();
+        }
+        
         createRoomButton.setOnClickListener(v -> {
             createRoomAndNavigate();
         });
@@ -54,7 +57,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private void connectWebSocket() {
         WebSocketSingleton webSocketSingleton = WebSocketSingleton.getInstance();
 
-        webSocketSingleton.connect(new ConnectionCallback() {
+        webSocketSingleton.setConnectionCallback(new ConnectionCallback() {
             @Override
             public void onSuccess() {
                 runOnUiThread(MultiplayerActivity.this::hideProgressBar);
@@ -64,7 +67,13 @@ public class MultiplayerActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 runOnUiThread(MultiplayerActivity.this::showConnectionFailedDialog);
             }
+
+            @Override
+            public void onDisconnect() {
+                runOnUiThread(MultiplayerActivity.this::showDisconnectedDialog);
+            }
         });
+        webSocketSingleton.connect();
     }
 
     private void showConnectionFailedDialog() {
@@ -97,5 +106,14 @@ public class MultiplayerActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (WebSocketSingleton.getInstance().isConnected())
+            claimDisconnectionAlert();
+        WebSocketSingleton.getInstance().sendMessage("DISCONNECT");
     }
 }
