@@ -1,12 +1,7 @@
 package com.example.conectaplus.play_game;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,8 +131,6 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
 
     @Override
     protected boolean isLocalTurn() {
-        Log.d("turnoLocal", turnoLocal + "");
-        Log.d("conectaK.turno1()", conectaK.turno1() + "");
         return (turnoLocal == 1) == conectaK.turno1();
     }
 
