@@ -3,6 +3,7 @@ package com.example.conectaplus.play_game;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +29,6 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_play_multiplayer);
         WebSocketHandler.claimDisconnectionAlert(this);
-        super.onCreate(savedInstanceState);
 
         chatManager = new ChatManager(this);
 
@@ -40,6 +40,8 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
         String matchCode = getIntent().getStringExtra("MATCH_CODE");
         turnoLocal = Integer.parseInt(getIntent().getStringExtra("TURNO_LOCAL"));
         textRoom.setText(String.format("%s %s", getString(R.string.match_string), matchCode != null ? matchCode : "?"));
+
+        super.onCreate(savedInstanceState);
 
         WebSocketSingleton.getInstance().setOnMessageListener(message -> {
             if (message.startsWith("CHAT"))
@@ -87,10 +89,10 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
 
     @Override
     protected void dropFicha(int colNum, boolean isMainTurn) {
-        super.dropFicha(colNum, isMainTurn);
-
         if (isLocalTurn())
             WebSocketSingleton.getInstance().sendMessage("MOVE " + (colNum + 1));
+
+        super.dropFicha(colNum, isMainTurn);
     }
 
     @Override
@@ -134,6 +136,8 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
 
     @Override
     protected boolean isLocalTurn() {
+        Log.d("turnoLocal", turnoLocal + "");
+        Log.d("conectaK.turno1()", conectaK.turno1() + "");
         return (turnoLocal == 1) == conectaK.turno1();
     }
 

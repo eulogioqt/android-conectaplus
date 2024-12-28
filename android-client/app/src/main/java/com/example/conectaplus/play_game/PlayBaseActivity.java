@@ -64,7 +64,6 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
         View ficha = new View(this);
         GradientDrawable circle = new GradientDrawable();
         circle.setShape(GradientDrawable.OVAL);
-        circle.setColor((isMainPlayer() && isLocalTurn()) || (!isMainPlayer() && !isLocalTurn()) ? Color.RED : Color.YELLOW);
         circle.setStroke(4, Color.BLACK);
         ficha.setBackground(circle);
 
@@ -76,10 +75,11 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
         turnLayout.addView(ficha);
 
         turnoText = new TextView(this);
-        turnoText.setText(String.format("%s", getString(isLocalTurn() ? R.string.turn_you_string : R.string.turn_rival_string)));
         turnoText.setTextSize(24);
         turnoText.setPadding(24, 0, 0, 0);
         turnLayout.setPadding(0, 0, 0, 32);
+
+        updateTurnDisplay();
 
         turnLayout.addView(turnoText);
     }
@@ -116,6 +116,8 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
         for (int col = 0; col < COLS; col++) {
             Button button = new Button(this);
             button.setText(String.valueOf(col + 1));
+            button.setBackgroundResource(R.drawable.button_style);
+            button.setTextColor(getResources().getColor(R.color.white));
 
             final int column = col;
             button.setOnClickListener(v -> {
@@ -133,6 +135,7 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
             buttonLayout.addView(button);
         }
     }
+
 
     protected void paintCell(int row, int col, boolean isMainPlayer) {
         runOnUiThread(() -> {
