@@ -1,16 +1,11 @@
 CONECTA PLUS PROTOCOL v1
-Version simple sin nada de seguridad ya que no hay mucho tiempo, pero para hacerlo bien se podria:
-
-- Que al crear la sala se especifique el tamaño del tablero para no poder mandar numeros sin sentido
-- Mensaje para salir de la partida de forma no abrupta antes de terminar la partida (LEAVE)
-- Meter al a sala una contraseña a parte de un codigo (como en pinturillo)
-- Cifrar la pass
 
 CLIENT:
 CHAT msg	Envia el mensaje msg y el servidor lo reenvia al jugador con el que esta jugando
 CREATE		Crea una sala para jugar
 JOIN code	Intenta unirse a la sala code
 MOVE x		Suelta la ficha en la casilla X
+DISCONNECT	Indica al servidor que el jugador ha salido manualmente de la partida
 END		Indica al servidor que ha terminado la partida
 
 SERVER:
@@ -19,6 +14,7 @@ CREATE code	Envia el codigo de la sala al jugador que la ha creado
 START		Empieza el juego
 DENY		Rechaza la conexion a la sala
 MOVE x		El otro jugador ha tirado una ficha en la posicion X
+DISCONNECT	El otro jugador se ha desconectado
 
 EJEMPLO:
 J1 --- CREATE ---> SERVER
@@ -40,3 +36,4 @@ J1 --- CHAT msg ---> SERVER
 SERVER --- CHAT msg ---> J2
 ...
 J1 o J2 --- END ---> SERVER
+,,,
