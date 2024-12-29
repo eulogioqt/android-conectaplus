@@ -21,7 +21,7 @@
     <string name="btn_chat">الدردشة</string>
     <string name="btn_create_match">إنشاء مباراة</string>
     <string name="btn_join_match">الانضمام إلى مباراة</string>
-    <string name="waiting_text">بانتظار اللاعب الثاني…</string>
+    <string name="waiting_text">بانتظار اللاعب الثاني...</string>
     <string name="write_message">اكتب رسالة...</string>
     <string name="btn_send">إرسال</string>
 
@@ -47,9 +47,9 @@
     <string name="options">الإعدادات</string>
     <string name="language">اللغة</string>
     <string-array name="language_options">
-        <item>العربية</item>
+        <item>الإسبانية</item>
         <item>الإنجليزية</item>
-        <item>عربي</item>
+        <item>العربية</item>
     </string-array>
 
     <!-- النصوص الجديدة -->
@@ -69,42 +69,43 @@
     <string name="history_item_result">النتيجة</string>
     <string name="history_item_timestamp">التاريخ والوقت</string>
 
-    <string name="about_title">حول كونكتا بلاس</string>
-    <string name="about_description">كونكتا بلاس هي لعبة اتصال 4 حيث يمكنك اللعب عبر الإنترنت مع الأصدقاء أو ضد الذكاء الاصطناعي. استمتع بتحدي نفسك أو الآخرين!</string>
+    <string name="about_title">حول كونيكتا بلاس</string>
+    <string name="about_description">كونيكتا بلاس هي لعبة اتصال 4 حيث يمكنك اللعب عبر الإنترنت مع الأصدقاء أو ضد الذكاء الاصطناعي. استمتع بتحدي نفسك أو الآخرين!</string>
     <string name="about_rules_title">قواعد اللعبة</string>
     <string name="about_rules_description">1. يتناوب اللاعبون على إسقاط الأقراص في الشبكة.\n2. الهدف هو توصيل 4 أقراص في صف، عمود، أو قطري.\n3. أول لاعب يحقق ذلك يفوز!\n4. إذا امتلأت الشبكة ولم يوصل أحد 4، تنتهي اللعبة بالتعادل.</string>
     <string name="about_creators_title">المبدعون</string>
-    <string name="creator1_name">المبدع 1</string>
+    <string name="creator1_name">أنتونيو كانيتي باينا</string>
     <string name="creator1_link">الملف الشخصي على جيثب</string>
     <string name="creator2_name">المبدع 2</string>
     <string name="creator2_link">الملف الشخصي على جيثب</string>
-    <string name="win">-</string>
-    <string name="loss">-</string>
-    <string name="draw">-</string>
-    <string name="singleplayer">-</string>
-    <string name="multiplayer">-</string>
-    <string name="history_item_type">-</string>
-    <string name="no_results_message">-</string>
-    <string name="clear_history_title">-</string>
-    <string name="clear_history_message">-</string>
-    <string name="clear_history_success">-</string>
-    <string name="ad_player_disconnected">-</string>
-    <string name="ad_player_disconnected_desc">-</string>
-    <string name="ad_server_disconnected">-</string>
-    <string name="ad_server_disconnected_desc">-</string>
-    <string name="game_configuration_title">-</string>
-    <string name="difficulty_easy">-</string>
-    <string name="difficulty_medium">-</string>
-    <string name="difficulty_hard">-</string>
-    <string name="input_rows_hint">-</string>
-    <string name="input_columns_hint">-</string>
-    <string name="input_win_hint">-</string>
-    <string name="btn_continue">-</string>
-    <string name="error_invalid_input">-</string>
-    <string name="error_invalid_win_condition">-</string>
-    <string name="difficulty_label">-</string>
-    <string name="label_rows">-</string>
-    <string name="label_columns">-</string>
-    <string name="label_win">-</string>
+    <string name="win">فوز</string>
+    <string name="loss">خسارة</string>
+    <string name="draw">تعادل</string>
+    <string name="singleplayer">لاعب واحد</string>
+    <string name="multiplayer">متعدد اللاعبين</string>
 
+    <string name="history_item_type">نوع المباراة</string>
+    <string name="no_results_message">لا توجد نتائج لعرضها</string>
+    <string name="clear_history_title">حذف السجل</string>
+    <string name="clear_history_message">هل تريد بالتأكيد حذف السجل بالكامل؟</string>
+    <string name="clear_history_success">تم حذف السجل بنجاح</string>
+    <string name="ad_player_disconnected">اللاعب انفصل</string>
+    <string name="ad_player_disconnected_desc">اللاعب الآخر انفصل عن المباراة</string>
+    <string name="ad_server_disconnected">انقطاع الاتصال</string>
+    <string name="ad_server_disconnected_desc">تم قطع الاتصال بالخادم</string>
+    <string name="game_configuration_title">إعدادات اللعبة</string>
+    <string name="difficulty_easy">سهل</string>
+    <string name="difficulty_medium">متوسط</string>
+    <string name="difficulty_hard">صعب (قد يكون بطيئًا مع اللوحات الكبيرة)</string>
+    <string name="input_rows_hint">عدد الصفوف</string>
+    <string name="input_columns_hint">عدد الأعمدة</string>
+    <string name="input_win_hint">عدد الأقراص للفوز</string>
+    <string name="btn_continue">استمرار</string>
+    <string name="error_invalid_input">يرجى استخدام قيم صحيحة</string>
+    <string name="error_invalid_win_condition">لا يمكن اختيار عدد أكبر من الأقراص للفوز عن حجم اللوحة</string>
+    <string name="difficulty_label">الصعوبة</string>
+    <string name="label_rows">عدد الصفوف [3, 8]</string>
+    <string name="label_columns">عدد الأعمدة [3, 8]</string>
+    <string name="label_win">عدد الأقراص للفوز (> 1)</string>
+    <string name="logo_description">شعار التطبيق</string>
 </resources>

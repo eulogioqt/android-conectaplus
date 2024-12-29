@@ -9,4 +9,10 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorButtonBackground">#EEEEEE</color>
+    <color name="button_primary">#6200EE</color>
+    <color name="button_secondary">#03DAC5</color>
+    <color name="button_tertiary">#FFBB33</color>
+    <color name="button_alert">#D32F2F</color>
+    <color name="background_gradient_start">#6200EE</color>
+    <color name="background_gradient_end">#3700B3</color>
 </resources>

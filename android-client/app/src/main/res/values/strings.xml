@@ -107,5 +107,6 @@
     <string name="label_rows">Number of rows [3, 8]</string>
     <string name="label_columns">Number of columns [3, 8]</string>
     <string name="label_win">Tiles to win (> 1)</string>
+    <string name="logo_description">app logo</string>
 
 </resources>
