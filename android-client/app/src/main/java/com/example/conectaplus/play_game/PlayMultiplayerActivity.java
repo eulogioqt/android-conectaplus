@@ -25,6 +25,10 @@ public class PlayMultiplayerActivity extends PlayBaseActivity {
         setContentView(R.layout.activity_play_multiplayer);
         WebSocketHandler.claimDisconnectionAlert(this);
 
+        ROWS = 5;
+        COLS = 6;
+        WIN = 4;
+
         chatManager = new ChatManager(this);
 
         Button chatButton = findViewById(R.id.chat_button);
