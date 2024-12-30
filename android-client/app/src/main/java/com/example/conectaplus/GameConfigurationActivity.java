@@ -59,7 +59,7 @@ public class GameConfigurationActivity extends AppCompatActivity {
         int cols = Integer.parseInt(colsText);
         int win = Integer.parseInt(winText);
 
-        if (rows <= 3 || cols <= 3 || rows > 8 || cols > 8) {
+        if (rows < 3 || cols < 3 || rows > 8 || cols > 8) {
             showError(getString(R.string.error_invalid_input));
             return false;
         }
