@@ -135,26 +135,21 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
             button.setText(String.valueOf(col + 1));
             button.setTextColor(getResources().getColor(R.color.white));
 
-            // Crear un StateListDrawable para manejar los estados
             StateListDrawable stateDrawable = new StateListDrawable();
 
-            // Fondo en estado normal
             GradientDrawable normalDrawable = new GradientDrawable();
             normalDrawable.setShape(GradientDrawable.OVAL);
-            normalDrawable.setColor(Color.parseColor("#0000BD")); // Azul oscuro
+            normalDrawable.setColor(Color.parseColor("#0000BD"));
             normalDrawable.setStroke(4, Color.BLACK);
 
-            // Fondo en estado presionado
             GradientDrawable pressedDrawable = new GradientDrawable();
             pressedDrawable.setShape(GradientDrawable.OVAL);
-            pressedDrawable.setColor(Color.parseColor("#00008B")); // Azul más oscuro
+            pressedDrawable.setColor(Color.parseColor("#00008B"));
             pressedDrawable.setStroke(4, Color.BLACK);
 
-            // Asignar los estados al StateListDrawable
-            stateDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable); // Estado presionado
-            stateDrawable.addState(new int[]{}, normalDrawable); // Estado normal
+            stateDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
+            stateDrawable.addState(new int[]{}, normalDrawable);
 
-            // Aplicar el fondo al botón
             button.setBackground(stateDrawable);
 
             final int column = col;
@@ -166,7 +161,6 @@ public abstract class PlayBaseActivity extends AppCompatActivity {
                 }
             });
 
-            // Ajustar tamaño y márgenes
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CELL_SIZE - 10, CELL_SIZE - 10);
             params.setMargins(8, 8, 8, 8);
             button.setLayoutParams(params);
