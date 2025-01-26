@@ -75,4 +75,10 @@ cd conecta-plus
 
 ---
 
+## 🙌 Agradecimientos
+
+Este proyecto utiliza partes del código del repositorio [AI-AlgorithmsGames](https://github.com/jmhorcas/AI-AlgorithmsGames) creado por [jmhorcas](https://github.com/jmhorcas).
+
+---
+
 ¡Gracias por probar **Conecta Plus**! 🎉
